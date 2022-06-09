@@ -648,11 +648,19 @@ class OC {
 
 		$config = \OC::$server->get(\OCP\IConfig::class);
 		if (!defined('PHPUNIT_RUN')) {
-			new OC\Log\ErrorHandler(
+			$errorHandler = new OC\Log\ErrorHandler(
 				\OCP\Server::get(\Psr\Log\LoggerInterface::class),
-				\OC::$CLI,
-				$config->getSystemValue('debug', false),
 			);
+			if ($config->getSystemValue('debug', false)) {
+				set_error_handler([$errorHandler, 'onAll'], E_ALL);
+				if (\OC::$CLI) {
+					set_exception_handler(['OC_Template', 'printExceptionErrorPage']);
+				}
+			} else {
+				set_error_handler([$errorHandler, 'onError']);
+			}
+			register_shutdown_function([$errorHandler, 'onShutdown']);
+			set_exception_handler([$errorHandler, 'onException']);
 		}
 
 		/** @var \OC\AppFramework\Bootstrap\Coordinator $bootstrapCoordinator */

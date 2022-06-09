@@ -42,21 +42,8 @@ use function set_exception_handler;
 class ErrorHandler {
 	private LoggerInterface $logger;
 
-	public function __construct(LoggerInterface $logger,
-								bool $isCli,
-								bool $debug) {
+	public function __construct(LoggerInterface $logger) {
 		$this->logger = $logger;
-
-		if ($debug) {
-			set_error_handler(Closure::fromCallable([$this, 'onAll']), E_ALL);
-			if ($isCli) {
-				set_exception_handler(Closure::fromCallable(['OC_Template', 'printExceptionErrorPage']));
-			}
-		} else {
-			set_error_handler(Closure::fromCallable([$this, 'onError']));
-		}
-		register_shutdown_function(Closure::fromCallable([$this, 'onShutdown']));
-		set_exception_handler(Closure::fromCallable([$this, 'onException']));
 	}
 
 	/**
@@ -69,7 +56,7 @@ class ErrorHandler {
 	/**
 	 * Fatal errors handler
 	 */
-	private function onShutdown(): void {
+	public function onShutdown(): void {
 		$error = error_get_last();
 		if ($error) {
 			$msg = $error['message'] . ' at ' . $error['file'] . '#' . $error['line'];
@@ -80,7 +67,7 @@ class ErrorHandler {
 	/**
 	 * Uncaught exception handler
 	 */
-	private function onException(Throwable $exception): void {
+	public function onException(Throwable $exception): void {
 		$class = get_class($exception);
 		$msg = $exception->getMessage();
 		$msg = "$class: $msg at " . $exception->getFile() . '#' . $exception->getLine();
@@ -90,7 +77,7 @@ class ErrorHandler {
 	/**
 	 * Recoverable errors handler
 	 */
-	private function onError(int $number, string $message, string $file, int $line): bool {
+	public function onError(int $number, string $message, string $file, int $line): bool {
 		if (!(error_reporting() & $number)) {
 			return true;
 		}
@@ -103,14 +90,14 @@ class ErrorHandler {
 	/**
 	 * Recoverable handler which catch all errors, warnings and notices
 	 */
-	private function onAll(int $number, string $message, string $file, int $line): bool {
+	public function onAll(int $number, string $message, string $file, int $line): bool {
 		$msg = $message . ' at ' . $file . '#' . $line;
 		$e = new Error(self::removePassword($msg));
 		$this->logger->log(self::errnoToLogLevel($number), $e->getMessage(), ['app' => 'PHP']);
 		return true;
 	}
 
-	public static function errnoToLogLevel(int $errno): int {
+	private static function errnoToLogLevel(int $errno): int {
 		switch ($errno) {
 			case E_USER_WARNING:
 				return ILogger::WARN;
