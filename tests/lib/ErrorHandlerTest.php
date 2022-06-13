@@ -25,7 +25,6 @@ declare(strict_types=1);
 
 namespace Test;
 
-use Error;
 use OC\Log\ErrorHandler;
 use OCP\ILogger;
 use PHPUnit\Framework\MockObject\MockObject;

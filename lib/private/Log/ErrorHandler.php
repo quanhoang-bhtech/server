@@ -30,14 +30,10 @@ declare(strict_types=1);
  */
 namespace OC\Log;
 
-use Closure;
 use Error;
 use OCP\ILogger;
 use Psr\Log\LoggerInterface;
 use Throwable;
-use function register_shutdown_function;
-use function set_error_handler;
-use function set_exception_handler;
 
 class ErrorHandler {
 	private LoggerInterface $logger;
