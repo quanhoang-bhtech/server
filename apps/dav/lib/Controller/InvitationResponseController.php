@@ -242,4 +242,20 @@ EOF;
 
 		return $iTipMessage;
 	}
+
+	public function handleInviteFromVCard() {
+		$vObject =  Reader::read($this->request->getParam('schedulingInvitation'));
+		$vEvent = $vObject->{'VEVENT'}->getValue();
+		$iTipMessage = new Message();
+		$iTipMessage->uid = $vEvent->{'UID'}->getValue();
+		$iTipMessage->component = 'VEVENT';
+		$iTipMessage->method = $vEvent->{'METHOD'}->getValue();
+		$iTipMessage->sequence =  $vEvent->{'SEQUENCE'}->getValue();
+		$iTipMessage->sender = $this->request->getParam('responder'); // this needs to come from Mail
+		$iTipMessage->recipient = $this->request->getParam('recipient');  // same here
+
+		$iTipMessage->message = $vObject->{'VEVENT'}->serialize();
+		
+		$this->responseServer->handleITipMessage($iTipMessage);
+	}
 }
