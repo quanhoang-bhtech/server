@@ -29,6 +29,8 @@ namespace OCA\DAV\Controller;
 
 use OCA\DAV\CalDAV\InvitationResponse\InvitationResponseServer;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\IDBConnection;
@@ -243,19 +245,86 @@ EOF;
 		return $iTipMessage;
 	}
 
-	public function handleInviteFromVCard() {
-		$vObject =  Reader::read($this->request->getParam('schedulingInvitation'));
-		$vEvent = $vObject->{'VEVENT'}->getValue();
+	/**
+	 *
+	 */
+	public function handleInvitationReply() {
+		$vObject =  Reader::read($this->request->getParam('schedulingResponse'));
+		$vEvent = $vObject->{'VEVENT'};
+
+		// First, we check if the correct method is passed to us
+		// We only support REPLY
+		if(strcasecmp('REPLY', $vEvent->{'METHOD'}->getValue()) !== 0) {
+			return new JSONResponse('Could not handle request', Http::STATUS_NOT_IMPLEMENTED);
+		}
+
+		// Secondly, check if mail recipient and organizer are one and the same
+		$recipient = $this->request->getParam('recipient');
+		$organizer = substr($vEvent->{'ORGANIZER'}->getValue(), 7);
+
+		if(strcasecmp($recipient, $organizer) !== 0) {
+			return new JSONResponse('Unable to modify event', Http::STATUS_FORBIDDEN);
+		}
+
+		// Thirdly, we need to compare the email address the REPLY is coming from (in Mail)
+		// to the email address in the ATTENDEE as specified in the RFC
+		// Sabre is doing this but is letting newly added attendees "party crash"
+		// but we should not allow modification here
+		$sender = $this->request->getParam('sender');
+		$attendee = substr($vEvent->{'ATTENDEE'}->getValue(), 7);
+
+		if(strcasecmp($sender, $attendee) !== 0) {
+			return new JSONResponse('Unable to modify event', Http::STATUS_FORBIDDEN);
+		}
+
+		// Finally, check if we have a token for the organizer with this UID
+		// that hasn't expired yet
+		if(!($this->findTokens($organizer, $vEvent->{'UID'}->getValue()))) {
+			return new JSONResponse('No event found', Http::STATUS_NOT_FOUND);
+		}
+
+		// Build the iTIP Message and let Sabre handle the rest
 		$iTipMessage = new Message();
 		$iTipMessage->uid = $vEvent->{'UID'}->getValue();
 		$iTipMessage->component = 'VEVENT';
 		$iTipMessage->method = $vEvent->{'METHOD'}->getValue();
 		$iTipMessage->sequence =  $vEvent->{'SEQUENCE'}->getValue();
-		$iTipMessage->sender = $this->request->getParam('responder'); // this needs to come from Mail
-		$iTipMessage->recipient = $this->request->getParam('recipient');  // same here
+		$iTipMessage->sender = $attendee;
+		$iTipMessage->recipient =  $organizer;
+		$iTipMessage->message = $vObject;
 
-		$iTipMessage->message = $vObject->{'VEVENT'}->serialize();
-		
 		$this->responseServer->handleITipMessage($iTipMessage);
+
+		if ($iTipMessage->getScheduleStatus() === '1.2') {
+			return new JSONResponse($iTipMessage->scheduleStatus, Http::STATUS_OK);
+		}
+		return new JSONResponse($iTipMessage->scheduleStatus, Http::STATUS_UNPROCESSABLE_ENTITY);
+
+	}
+
+	/**
+	 * @param string $organizer  needs to contain the 'mailto:' part
+	 * @param string $uid
+	 * @return bool
+	 */
+	private function findTokens(string $organizer, string $uid): bool {
+		$query = $this->db->getQueryBuilder();
+		$query->select('*')
+			->from('calendar_invitations')
+		    ->andWhere($query->expr()->eq('organizer', $query->createNamedParameter($organizer)))
+			->andWhere($query->expr()->eq('uid', $query->createNamedParameter($uid)));
+		$stmt = $query->executeQuery();
+		$rows = $stmt->fetchAll();
+
+		if (empty($rows)) {
+			return false;
+		}
+
+		$currentTime = $this->timeFactory->getTime();
+		if (((int) $rows[0]['expiration']) < $currentTime) {
+			return false;
+		}
+
+		return true;
 	}
 }
