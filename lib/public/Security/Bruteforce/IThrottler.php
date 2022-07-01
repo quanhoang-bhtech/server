@@ -23,7 +23,6 @@ declare(strict_types=1);
 
 namespace OCP\Security\Bruteforce;
 
-
 /**
  * Class Throttler implements the bruteforce protection for security actions in
  * Nextcloud.
