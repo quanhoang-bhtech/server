@@ -40,6 +40,7 @@ namespace OCA\DAV\CalDAV;
 
 use DateTime;
 use DateTimeInterface;
+use OC\DB\Exceptions\DbalException;
 use OCA\DAV\AppInfo\Application;
 use OCA\DAV\Connector\Sabre\Principal;
 use OCA\DAV\DAV\Sharing\Backend;
@@ -64,6 +65,7 @@ use OCA\DAV\Events\CalendarUpdatedEvent;
 use OCA\DAV\Events\SubscriptionCreatedEvent;
 use OCA\DAV\Events\SubscriptionDeletedEvent;
 use OCA\DAV\Events\SubscriptionUpdatedEvent;
+use OCP\Calendar\Exceptions\CalendarException;
 use OCP\DB\Exception;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\EventDispatcher\IEventDispatcher;
@@ -770,8 +772,14 @@ class CalDavBackend extends AbstractBackend implements SyncSupport, Subscription
 	 * @param string $calendarUri
 	 * @param array $properties
 	 * @return int
+	 *
+	 * @throws CalendarException
 	 */
 	public function createCalendar($principalUri, $calendarUri, array $properties) {
+		if(strlen($calendarUri) > 255) {
+			throw new CalendarException('URI too long. Calendar not created');
+		}
+
 		$values = [
 			'principaluri' => $this->convertPrincipal($principalUri, true),
 			'uri' => $calendarUri,
