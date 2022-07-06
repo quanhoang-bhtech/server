@@ -29,11 +29,14 @@ namespace OCA\DAV\CalDAV;
 
 use OCA\DAV\CalDAV\Auth\CustomPrincipalPlugin;
 use OCA\DAV\CalDAV\InvitationResponse\InvitationResponseServer;
+use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\Calendar\Exceptions\CalendarException;
 use OCP\Calendar\ICreateFromString;
 use OCP\Constants;
 use OCP\Security\ISecureRandom;
 use Sabre\DAV\Exception\Conflict;
+use Sabre\VObject\Component\VEvent;
+use Sabre\VObject\Property\VCard\DateTime;
 use Sabre\VObject\Reader;
 use function Sabre\Uri\split as uriSplit;
 
@@ -47,23 +50,23 @@ class CalendarImpl implements ICreateFromString {
 
 	/** @var array */
 	private $calendarInfo;
+
+	/** @var ISecureRandom  */
 	private $random;
 
-	/**
-	 * CalendarImpl constructor.
-	 *
-	 * @param Calendar $calendar
-	 * @param array $calendarInfo
-	 * @param CalDavBackend $backend
-	 */
+	/** @var ITimeFactory  */
+	private $timeFactory;
+
 	public function __construct(Calendar $calendar,
 								array $calendarInfo,
 								CalDavBackend $backend,
-								ISecureRandom $random) {
+								ISecureRandom $random,
+								ITimeFactory $timeFactory) {
 		$this->calendar = $calendar;
 		$this->calendarInfo = $calendarInfo;
 		$this->backend = $backend;
-		$this->random = $random; // possibly create filename in mail already?
+		$this->random = $random;
+		$this->timeFactory = $timeFactory;
 	}
 
 	/**
@@ -183,78 +186,75 @@ class CalendarImpl implements ICreateFromString {
 		}
 	}
 
-	// prcess invitation response here
-	// check security implications here
-	// pass on to createFromString or similar (talk to richard)
+	public function handleInvitationReply(string $sender, string $recipient, string $calendarData): void {
+		$vObject =  Reader::read($calendarData);
+		/** @var VEvent $vEvent */
+		$vEvent = $vObject->{'VEVENT'};
 
-	// @todo think about $recipient. is it neccessary?
-//	public function handleInvitationReply(string $sender, string $recipient, string $calendarData): void {
-//		$vObject =  Reader::read($calendarData);
-//		$vEvent = $vObject->{'VEVENT'};
-//
-//		// First, we check if the correct method is passed to us
-//		// REPLY: the attendee has to be updated in the ORGANIZER calendar
-//		if(strcasecmp('REPLY', $vEvent->{'METHOD'}->getValue()) !== 0) {
-//			return;
-//		}
-//
-//		// check if mail recipient and organizer are one and the same
-//		$organizer = substr($vEvent->{'ORGANIZER'}->getValue(), 7);
-//
-//		if(strcasecmp($recipient, $organizer) !== 0) {
-//			return;
-//		}
-//
-//		//check if the event is in the future
-//
-//		// get the original and use it for further comparisons here:
-//		$caldavBackend = $this->calendar->caldavBackend;
-//		$original = $caldavBackend->search($this->calendarInfo, 'UID', [$vEvent->{'UID'}], [], 1, 0);
-//
-//		if(empty($original)) {
-//			throw new CalendarException('Could not find event in calendar ' . $this->getDisplayName());
-//		}
-//
-//		$originalVevent = Reader::read($original[0])->{'VEVENT'};
-//
-//		// check if the organizer in the attached calendar data is the one in the original event
-//		if(strcasecmp($originalVevent->{'ORGANIZER'}->getValue(), $vEvent->{'ORGANIZER'}->getValue()) !== 0) {
-//			return;
-//		}
-//
-//		// we need to compare the email address the REPLY is coming from (in Mail)
-//		// to the email address in the ATTENDEE as specified in the RFC
-//		$sender = $this->request->getParam('sender');
-//		$attendee = substr($vEvent->{'ATTENDEE'}->getValue(), 7);
-//
-//		// Sabre is doing this but is letting newly added attendees "party crash"
-//		// but we should not allow modification here
-//		// @todo we need to check the current attendee agains the existing attendees in
-//		// the original VEVENT
-//
-//		// get the original event here - search by UID and principal
-//
-//		if(strcasecmp($sender, $attendee) !== 0) {
-//			return;
-//		}
-//
-//
-//		// check attendee against the attendee list here
-//		$attendees = $originalVevent->{'ATTENDEE'}; // this is wrong, I need to search further
-//
-//		foreach( $attendees as $a) {
-//			if(strcasecmp($a->getValue(), $vEvent->{'ATTENDEE'}->getValue()) !== 0) {
-//				return;
-//			}
-//		}
-//
-//		$filename = $this->random->generate(32, ISecureRandom::CHAR_ALPHANUMERIC);
-//
-//		$this->createFromString($filename, $calendarData);
-//
-//	}
-//
-//	public function handleInvitationCancel(): void {
+		// First, we check if the correct method is passed to us
+		// REPLY: the attendee has to be updated in the ORGANIZER calendar
+		if(strcasecmp('REPLY', $vEvent->{'METHOD'}->getValue()) !== 0) {
+			throw new CalendarException('Wrong method provided for processing');
+		}
+
+		// check if mail recipient and organizer are one and the same
+		$organizer = substr($vEvent->{'ORGANIZER'}->getValue(), 7);
+
+		if(strcasecmp($recipient, $organizer) !== 0) {
+			throw new CalendarException('Recipient and ORGANIZER must be identical');
+		}
+
+		//check if the event is in the future
+		/** @var DateTime $eventTime */
+		$eventTime = $vEvent->{'DTSTART'};
+		if($$eventTime->getDateTime()->getTimeStamp() < $this->timeFactory->getDateTime()->getTimestamp()) {
+			throw new CalendarException('Only events in the future can be accepted');
+		}
+
+		// get the original and use it for further comparisons here:
+		$caldavBackend = $this->calendar->caldavBackend;
+		$original = $caldavBackend->search($this->calendarInfo, 'UID', [$vEvent->{'UID'}], [], 1, 0);
+
+		if(empty($original)) {
+			throw new CalendarException('Could not find event in calendar ' . $this->getDisplayName());
+		}
+
+		$originalVevent = Reader::read($original[0])->{'VEVENT'};
+
+		// check if the organizer in the attached calendar data is the one in the original event
+		if(strcasecmp($originalVevent->{'ORGANIZER'}->getValue(), $vEvent->{'ORGANIZER'}->getValue()) !== 0) {
+			throw new CalendarException('Invalid ORGANIZER passed for REPLY');
+		}
+
+		// we need to compare the email address the REPLY is coming from (in Mail)
+		// to the email address in the ATTENDEE as specified in the RFC
+		$attendee = substr($vEvent->{'ATTENDEE'}->getValue(), 7);
+
+		if(strcasecmp($sender, $attendee) !== 0) {
+			throw new CalendarException('Party crashing is not supported for iMIP replies');
+		}
+
+		if (!isset($originalVevent->ATTENDEE)) {
+			throw new CalendarException('No attendees set in original VEVENT.');
+		}
+
+		// Sabre is doing this but is letting newly added attendees "party crash"
+		// but we should not allow modification here
+		$found = false;
+		foreach ($originalVevent->ATTENDEE as $a) {
+			if(strcasecmp($a->getValue(), $vEvent->{'ATTENDEE'}->getValue()) === 0) {
+				$found = true;
+			}
+		}
+		if(!$found) {
+			throw new CalendarException('Party crashing is not supported for iMIP replies');
+		}
+
+		$filename = $this->random->generate(32, ISecureRandom::CHAR_ALPHANUMERIC);
+		$this->createFromString($filename, $calendarData);
+	}
+
+//	public function handleInvitationCancel(string $sender, string $recipient, ): void {
 //		$vObject =  Reader::read($this->request->getParam('scheduling'));
 //		$vEvent = $vObject->{'VEVENT'};
 //
