@@ -65,6 +65,8 @@ class AccountMigratorTest extends TestCase {
 
 	private const REGEX_AVATAR_FILE = '/^' . Application::APP_ID . '\/' . 'avatar\.(jpg|png)' . '$/';
 
+	private const REGEX_CONFIG_FILE = '/^' . Application::APP_ID . '\/' . '[a-z]+\.json' . '$/';
+
 	protected function setUp(): void {
 		$app = new App(Application::APP_ID);
 		$container = $app->getContainer();
@@ -81,19 +83,21 @@ class AccountMigratorTest extends TestCase {
 	public function dataImportExportAccount(): array {
 		return array_map(
 			function (string $filename) {
-				$dataPath = self::ASSETS_DIR . $filename;
-				// For each json file there is an avatar image with the same basename
-				$avatarBasename = pathinfo($filename, PATHINFO_FILENAME);
-				$avatarPath = self::ASSETS_DIR . (file_exists(self::ASSETS_DIR . "$avatarBasename.jpg") ? "$avatarBasename.jpg" : "$avatarBasename.png");
+				$dataPath = static::ASSETS_DIR . $filename;
+				// For each account json file there is an avatar image and a config json file with the same basename
+				$basename = pathinfo($filename, PATHINFO_FILENAME);
+				$avatarPath = static::ASSETS_DIR . (file_exists(static::ASSETS_DIR . "$basename.jpg") ? "$basename.jpg" : "$basename.png");
+				$configPath = static::ASSETS_DIR . "$basename-config." . pathinfo($filename, PATHINFO_EXTENSION);
 				return [
 					UUIDUtil::getUUID(),
 					json_decode(file_get_contents($dataPath), true, 512, JSON_THROW_ON_ERROR),
 					$avatarPath,
+					json_decode(file_get_contents($configPath), true, 512, JSON_THROW_ON_ERROR),
 				];
 			},
 			array_filter(
-				scandir(self::ASSETS_DIR),
-				fn (string $filename) => pathinfo($filename, PATHINFO_EXTENSION) === 'json',
+				scandir(static::ASSETS_DIR),
+				fn (string $filename) => pathinfo($filename, PATHINFO_EXTENSION) === 'json' && mb_strpos(pathinfo($filename, PATHINFO_FILENAME), 'config') === false,
 			),
 		);
 	}
@@ -101,10 +105,11 @@ class AccountMigratorTest extends TestCase {
 	/**
 	 * @dataProvider dataImportExportAccount
 	 */
-	public function testImportExportAccount(string $userId, array $importData, string $avatarPath): void {
+	public function testImportExportAccount(string $userId, array $importData, string $avatarPath, array $importConfig): void {
 		$user = $this->userManager->createUser($userId, 'topsecretpassword');
 		$avatarExt = pathinfo($avatarPath, PATHINFO_EXTENSION);
 		$exportData = $importData;
+		$exportConfig = $importConfig;
 		// Verification status of email will be set to in progress on import so we set the export data to reflect that
 		$exportData[IAccountManager::PROPERTY_EMAIL]['verified'] = IAccountManager::VERIFICATION_IN_PROGRESS;
 
@@ -115,10 +120,15 @@ class AccountMigratorTest extends TestCase {
 			->willReturn(1);
 
 		$this->importSource
-			->expects($this->once())
 			->method('getFileContents')
-			->with($this->matchesRegularExpression(self::REGEX_ACCOUNT_FILE))
-			->willReturn(json_encode($importData));
+			->withConsecutive(
+				[$this->matchesRegularExpression(static::REGEX_ACCOUNT_FILE)],
+				[$this->matchesRegularExpression(static::REGEX_CONFIG_FILE)],
+			)
+			->willReturnOnConsecutiveCalls(
+				json_encode($importData),
+				json_encode($importConfig),
+			);
 
 		$this->importSource
 			->expects($this->once())
@@ -129,7 +139,7 @@ class AccountMigratorTest extends TestCase {
 		$this->importSource
 			->expects($this->once())
 			->method('getFileAsStream')
-			->with($this->matchesRegularExpression(self::REGEX_AVATAR_FILE))
+			->with($this->matchesRegularExpression(static::REGEX_AVATAR_FILE))
 			->willReturn(fopen($avatarPath, 'r'));
 
 		$this->migrator->import($user, $this->importSource, $this->output);
@@ -150,14 +160,17 @@ class AccountMigratorTest extends TestCase {
 		}
 
 		$this->exportDestination
-			->expects($this->once())
+			->expects($this->exactly(2))
 			->method('addFileContents')
-			->with($this->matchesRegularExpression(self::REGEX_ACCOUNT_FILE), json_encode($exportData));
+			->withConsecutive(
+				[$this->matchesRegularExpression(static::REGEX_ACCOUNT_FILE), json_encode($exportData)],
+				[$this->matchesRegularExpression(static::REGEX_CONFIG_FILE), $exportConfig],
+			);
 
 		$this->exportDestination
 			->expects($this->once())
 			->method('addFileAsStream')
-			->with($this->matchesRegularExpression(self::REGEX_AVATAR_FILE), $this->isType('resource'));
+			->with($this->matchesRegularExpression(static::REGEX_AVATAR_FILE), $this->isType('resource'));
 
 		$this->migrator->export($user, $this->exportDestination, $this->output);
 	}
