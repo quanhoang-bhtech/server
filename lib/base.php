@@ -1048,6 +1048,15 @@ class OC {
 			return;
 		}
 
+		// Handle CSS resources that can't be found
+		// This prevents browsers from redirecting to the default page and then
+		// attempting to parse HTML as CSS.
+		$acceptHeader = $request->getHeader('Accept');
+		if (strpos($acceptHeader, "text/css") === 0) {
+			http_response_code(404);
+			return;
+		}
+
 		// Someone is logged in
 		if (\OC::$server->getUserSession()->isLoggedIn()) {
 			OC_App::loadApps();
