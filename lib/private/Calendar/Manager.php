@@ -27,12 +27,19 @@ declare(strict_types=1);
 namespace OC\Calendar;
 
 use OC\AppFramework\Bootstrap\Coordinator;
+use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\Calendar\Exceptions\CalendarException;
 use OCP\Calendar\ICalendar;
 use OCP\Calendar\ICalendarProvider;
 use OCP\Calendar\ICalendarQuery;
+use OCP\Calendar\ICreateFromString;
 use OCP\Calendar\IManager;
+use OCP\Security\ISecureRandom;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
+use Sabre\VObject\Component\VEvent;
+use Sabre\VObject\Property\VCard\DateTime;
+use Sabre\VObject\Reader;
 use Throwable;
 use function array_map;
 use function array_merge;
@@ -58,12 +65,20 @@ class Manager implements IManager {
 	/** @var LoggerInterface */
 	private $logger;
 
+	private ITimeFactory $timeFactory;
+
+	private ISecureRandom $random;
+
 	public function __construct(Coordinator $coordinator,
 								ContainerInterface $container,
-								LoggerInterface $logger) {
+								LoggerInterface $logger,
+								ITimeFactory $timeFactory,
+								ISecureRandom $random) {
 		$this->coordinator = $coordinator;
 		$this->container = $container;
 		$this->logger = $logger;
+		$this->timeFactory = $timeFactory;
+		$this->random = $random;
 	}
 
 	/**
@@ -218,5 +233,149 @@ class Manager implements IManager {
 
 	public function newQuery(string $principalUri): ICalendarQuery {
 		return new CalendarQuery($principalUri);
+	}
+
+	public function handleIMipReply(string $principalUri, string $sender, string $recipient, string $calendarData): bool {
+		$vObject =  Reader::read($calendarData);
+		/** @var VEvent $vEvent */
+		$vEvent = $vObject->{'VEVENT'};
+
+		// First, we check if the correct method is passed to us
+		// REPLY: the attendee has to be updated in the ORGANIZER calendar
+		if(strcasecmp('REPLY', $vEvent->{'METHOD'}->getValue()) !== 0) {
+			$this->logger->warning('Wrong method provided for processing');
+			return false;
+		}
+
+		// check if mail recipient and organizer are one and the same
+		$organizer = substr($vEvent->{'ORGANIZER'}->getValue(), 7);
+
+		if(strcasecmp($recipient, $organizer) !== 0) {
+			$this->logger->warning('Recipient and ORGANIZER must be identical');
+			return false;
+		}
+
+		//check if the event is in the future
+		/** @var DateTime $eventTime */
+		$eventTime = $vEvent->{'DTSTART'};
+		if($$eventTime->getDateTime()->getTimeStamp() < $this->timeFactory->getDateTime()->getTimestamp()) {
+			$this->logger->warning('Only events in the future are accepted');
+			return false;
+		}
+
+		$calendars = $this->getCalendarsForPrincipal($principalUri);
+
+		foreach($calendars as $calendar) {
+			// get the original and use it for further comparisons here:
+			$original = $calendar->search('UID', [$vEvent->{'UID'}], [], 1, 0);
+
+			if(empty($original)) {
+				continue;
+			}
+
+			$originalVevent = Reader::read($original[0])->{'VEVENT'};
+
+			// check if the organizer in the attached calendar data is the one in the original event
+			if(strcasecmp($originalVevent->{'ORGANIZER'}->getValue(), $vEvent->{'ORGANIZER'}->getValue()) !== 0) {
+				$this->logger->warning('Invalid ORGANIZER passed for REPLY');
+				continue;
+			}
+
+			// we need to compare the email address the REPLY is coming from (in Mail)
+			// to the email address in the ATTENDEE as specified in the RFC
+			$attendee = substr($vEvent->{'ATTENDEE'}->getValue(), 7);
+
+			if(strcasecmp($sender, $attendee) !== 0) {
+				$this->logger->warning('Party crashing is not supported for iMIP replies');
+				continue;
+			}
+
+			if (!isset($originalVevent->ATTENDEE)) {
+				$this->logger->warning('No attendees set in original VEVENT.');
+				continue;
+			}
+
+			// Sabre is doing this but is letting newly added attendees "party crash"
+			// but we should not allow modification here
+			$found = false;
+			foreach ($originalVevent->ATTENDEE as $a) {
+				if(strcasecmp($a->getValue(), $vEvent->{'ATTENDEE'}->getValue()) === 0) {
+					$found = true;
+					break;
+				}
+			}
+			if(!$found) {
+				$this->logger->warning('Party crashing is not supported for iMIP replies');
+				continue;
+			}
+
+			// Check if this is a writable calendar
+			if(!($calendar instanceof ICreateFromString)) {
+				$this->logger->error('Could not update calendar for iMIP processing as calendar' . $calendar->getUri() . 'is not writable');
+				continue;
+			}
+
+			$filename = $this->random->generate(32, ISecureRandom::CHAR_ALPHANUMERIC);
+			try {
+				$calendar->createFromString($filename, $calendarData);
+				return true;
+			} catch (CalendarException $e) {
+				$this->logger->error('Could not update calendar for iMIP processing', ['exception' => $e]);
+			}
+		}
+		return false;
+	}
+
+	//	public function handleInvitationCancel(string $sender, string $recipient, ): void {
+//		$vObject =  Reader::read($this->request->getParam('scheduling'));
+//		$vEvent = $vObject->{'VEVENT'};
+//
+//		// First, we check if the correct method is passed to us
+//		// CANCEL: the STATUS has to be updated in the ATTENDEEs calendar
+//		if(strcasecmp('CANCEL', $vEvent->{'METHOD'}->getValue()) !== 0) {
+//			return new JSONResponse(['Could not handle request'], Http::STATUS_NOT_IMPLEMENTED);
+//		}
+//
+//		// Secondly, check if mail recipient and attendee are one and the same
+//		$recipient = $this->request->getParam('recipient');
+//		$attendee = substr($vEvent->{'ATTENDEE'}->getValue(), 7);
+//
+//		if(strcasecmp($recipient, $attendee) !== 0) {
+//			return new JSONResponse(['Unable to modify event'], Http::STATUS_FORBIDDEN);
+//		}
+//
+//		// Thirdly, we need to compare the email address the CANCEL is coming from (in Mail)
+//		// to the email address in the ORGANIZER.
+//		// We don't want to accept a CANCEL request from just anyone
+//		$sender = $this->request->getParam('sender');
+//		$organizer = substr($vEvent->{'ORGANIZER'}->getValue(), 7);
+//
+//		if(strcasecmp($sender, $organizer) !== 0) {
+//			return new JSONResponse(['Unable to modify event'], Http::STATUS_FORBIDDEN);
+//		}
+//
+//
+//
+//		// Build the iTIP Message and let Sabre handle the rest
+//		$iTipMessage = new Message();
+//		$iTipMessage->uid = $vEvent->{'UID'}->getValue();
+//		$iTipMessage->component = 'VEVENT';
+//		$iTipMessage->method = $vEvent->{'METHOD'}->getValue();
+//		$iTipMessage->sequence =  $vEvent->{'SEQUENCE'}->getValue();
+//		$iTipMessage->sender = $attendee;
+//		$iTipMessage->recipient =  $organizer;
+//		$iTipMessage->message = $vObject;
+//
+//		$this->responseServer->handleITipMessage($iTipMessage);
+//
+//		if ($iTipMessage->getScheduleStatus() === '1.2') {
+//			return new JSONResponse([$iTipMessage->scheduleStatus]);
+//		}
+//		return new JSONResponse([$iTipMessage->scheduleStatus], Http::STATUS_UNPROCESSABLE_ENTITY);
+//
+//	}
+	public function handleIMipCancel(string $principalUri, ?string $sender, string|\Horde_Mail_Rfc822_List $recipient, mixed $content): bool {
+		// TODO: Implement handleIMipCancel() method.
+		return false;
 	}
 }
