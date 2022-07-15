@@ -351,11 +351,12 @@ class FTP extends Common {
 
 			$data = [];
 			$data['mimetype'] = $isDir ? FileInfo::MIMETYPE_FOLDER : $mimeTypeDetector->detectPath($name);
-			$timestamp = \DateTime::createFromFormat('YmdGis', $file['modify']);
-			$data['mtime'] = $timestamp ? $timestamp->getTimestamp() : (int) strtotime('YmdGis', $file['modify']);
-			if ($data['mtime'] === false) {
-				$data['mtime'] = time();
-			}
+			$modifyDate = \DateTime::createFromFormat('YmdGis', $file['modify']);
+			if ($modifyDate === false) {
+				$date['mtime'] = time();
+			} else {
+				$data['mtime'] = $modifyDate->getTimestamp();
+ 			}
 			if ($isDir) {
 				$data['size'] = -1; //unknown
 			} elseif (isset($file['size'])) {
