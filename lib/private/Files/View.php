@@ -2160,7 +2160,7 @@ class View {
 	/**
 	 * @param string $filename
 	 * @return array
-	 * @throws \OC\User\NoUserException
+	 * @throws \OCP\User\NoUserException
 	 * @throws NotFoundException
 	 */
 	public function getUidAndFilename($filename) {
