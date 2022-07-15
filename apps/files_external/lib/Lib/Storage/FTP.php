@@ -353,7 +353,7 @@ class FTP extends Common {
 			$data['mimetype'] = $isDir ? FileInfo::MIMETYPE_FOLDER : $mimeTypeDetector->detectPath($name);
 			$modifyDate = \DateTime::createFromFormat('YmdGis', $file['modify']);
 			if ($modifyDate === false) {
-				$date['mtime'] = time();
+				$data['mtime'] = time();
 			} else {
 				$data['mtime'] = $modifyDate->getTimestamp();
  			}
