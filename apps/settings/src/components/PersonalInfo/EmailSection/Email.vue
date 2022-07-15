@@ -40,7 +40,7 @@
 				</transition>
 
 				<template v-if="!primary">
-					<FederationControl :account-property="accountProperty"
+					<FederationControl :readable="propertyReadable"
 						:additional="true"
 						:additional-value="email"
 						:disabled="federationDisabled"
@@ -83,10 +83,10 @@ import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import { showError } from '@nextcloud/dialogs'
 import debounce from 'debounce'
 
-import FederationControl from '../shared/FederationControl'
-import logger from '../../../logger'
+import FederationControl from '../shared/FederationControl.vue'
+import logger from '../../../logger.js'
 
-import { ACCOUNT_PROPERTY_READABLE_ENUM, VERIFICATION_ENUM } from '../../../constants/AccountPropertyConstants'
+import { ACCOUNT_PROPERTY_READABLE_ENUM, VERIFICATION_ENUM } from '../../../constants/AccountPropertyConstants.js'
 import {
 	removeAdditionalEmail,
 	saveAdditionalEmail,
@@ -94,8 +94,8 @@ import {
 	saveNotificationEmail,
 	savePrimaryEmail,
 	updateAdditionalEmail,
-} from '../../../service/PersonalInfo/EmailService'
-import { validateEmail } from '../../../utils/validate'
+} from '../../../service/PersonalInfo/EmailService.js'
+import { validateEmail } from '../../../utils/validate.js'
 
 export default {
 	name: 'Email',
@@ -135,7 +135,7 @@ export default {
 
 	data() {
 		return {
-			accountProperty: ACCOUNT_PROPERTY_READABLE_ENUM.EMAIL,
+			propertyReadable: ACCOUNT_PROPERTY_READABLE_ENUM.EMAIL,
 			initialEmail: this.email,
 			localScope: this.scope,
 			saveAdditionalEmailScope,
