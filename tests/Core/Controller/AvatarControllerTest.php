@@ -35,6 +35,7 @@ use OC\AppFramework\Utility\TimeFactory;
 use OC\Core\Controller\AvatarController;
 use OCP\AppFramework\Http;
 use OCP\Files\File;
+use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\Files\IRootFolder;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
@@ -115,7 +116,7 @@ class AvatarControllerTest extends \Test\TestCase {
 		$this->userManager->method('get')
 			->willReturnMap([['userId', $this->userMock]]);
 
-		$this->avatarFile = $this->getMockBuilder('OCP\Files\File')->getMock();
+		$this->avatarFile = $this->getMockBuilder(ISimpleFile::class)->getMock();
 		$this->avatarFile->method('getContent')->willReturn('image data');
 		$this->avatarFile->method('getMimeType')->willReturn('image type');
 		$this->avatarFile->method('getEtag')->willReturn('my etag');
