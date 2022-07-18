@@ -36,17 +36,17 @@ $urlGenerator = $_['urlGenerator'];
 		])) ?>
 	</p>
 
-	<span class="warning">
+	<div class="notecard warning">
 		<h3><?php p($l->t('Security warning')) ?></h3>
 		<p>
 			<?php p($l->t('If you are not trying to set up a new device or app, someone is trying to trick you into granting them access to your data. In this case do not proceed and instead contact your system administrator.')) ?>
 		</p>
-	</span>
+	</div>
 
 	<br/>
 
 	<p id="redirect-link">
-		<a href="<?php p($urlGenerator->linkToRouteAbsolute('core.ClientFlowLoginV2.grantPage', ['stateToken' => $_['stateToken'], 'user' => $_['user']])) ?>">
+		<a href="<?php p($urlGenerator->linkToRouteAbsolute('core.ClientFlowLoginV2.grantPage', ['stateToken' => $_['stateToken'], 'user' => $_['user']])) ?>"  tabindex="-1">
 			<input type="submit" class="login primary icon-confirm-white" value="<?php p($l->t('Log in')) ?>">
 		</a>
 	</p>

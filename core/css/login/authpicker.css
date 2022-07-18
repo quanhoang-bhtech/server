@@ -1,11 +1,16 @@
 .picker-window {
 	display: block;
-	padding: 10px;
+	padding: 16px;
 	margin: 20px 0;
-	background-color: rgba(0,0,0,.3);
-	color: #fff;
-	border-radius: 3px;
+	background-color: var(--color-main-background);
+	color: var(--color-main-text);
+	border-radius: var(--border-radius-large);
+    box-shadow: 0 0 10px var(--color-box-shadow);
 	cursor: default;
+}
+
+.picker-window h2 {
+    margin: 20px auto;
 }
 
 .apptoken-link {
