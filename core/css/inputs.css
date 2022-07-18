@@ -85,7 +85,7 @@ textarea,
 div[contenteditable=true],
 div[contenteditable=false] {
   width: 130px;
-  min-height: 34px;
+  min-height: 44px;
   box-sizing: border-box;
 }
 
@@ -281,7 +281,7 @@ input {
 input:not([type=radio]):not([type=checkbox]):not([type=range]):not([type=submit]):not([type=button]):not([type=reset]):not([type=color]):not([type=file]):not([type=image]) {
   -webkit-appearance: textfield;
   -moz-appearance: textfield;
-  height: 34px;
+  height: 44px;
 }
 input[type=radio], input[type=checkbox], input[type=file], input[type=image] {
   height: auto;
@@ -310,7 +310,7 @@ input[type=submit],
 input[type=reset] {
   padding: 6px 16px;
   width: auto;
-  min-height: 34px;
+  min-height: 44px;
   cursor: pointer;
   box-sizing: border-box;
   background-color: var(--color-background-dark);
@@ -391,7 +391,7 @@ select {
   background-color: inherit;
   outline: 0;
   padding-right: 24px !important;
-  height: 34px;
+  height: 44px;
 }
 
 /* Confirm inputs */
@@ -406,8 +406,8 @@ input[type=text] + .icon-confirm, input[type=password] + .icon-confirm, input[ty
   /* Avoid background under border */
   background-color: var(--color-main-background) !important;
   opacity: 1;
-  height: 34px;
-  width: 34px;
+  height: 44px;
+  width: 44px;
   padding: 7px 6px;
   cursor: pointer;
   margin-right: 0;
@@ -809,7 +809,7 @@ div.select2-container a.select2-choice .select2-search-field input {
   cursor: pointer;
   position: relative;
   border-radius: var(--border-radius);
-  height: 34px;
+  height: 44px;
   /* tag wrapper */
   /* Single select default value */
   /* displayed text if tag limit reached */
