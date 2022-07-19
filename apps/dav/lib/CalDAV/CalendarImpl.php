@@ -34,8 +34,12 @@ use OCP\Calendar\Exceptions\CalendarException;
 use OCP\Calendar\ICreateFromString;
 use OCP\Constants;
 use OCP\Security\ISecureRandom;
+use Psr\Log\LoggerInterface;
 use Sabre\DAV\Exception\Conflict;
+use Sabre\VObject\Component\VCalendar;
 use Sabre\VObject\Component\VEvent;
+use Sabre\VObject\Document;
+use Sabre\VObject\ITip\Message;
 use Sabre\VObject\Property\VCard\DateTime;
 use Sabre\VObject\Reader;
 use function Sabre\Uri\split as uriSplit;
@@ -51,22 +55,12 @@ class CalendarImpl implements ICreateFromString {
 	/** @var array */
 	private $calendarInfo;
 
-	/** @var ISecureRandom  */
-	private $random;
-
-	/** @var ITimeFactory  */
-	private $timeFactory;
-
 	public function __construct(Calendar $calendar,
 								array $calendarInfo,
-								CalDavBackend $backend,
-								ISecureRandom $random,
-								ITimeFactory $timeFactory) {
+								CalDavBackend $backend) {
 		$this->calendar = $calendar;
 		$this->calendarInfo = $calendarInfo;
 		$this->backend = $backend;
-		$this->random = $random;
-		$this->timeFactory = $timeFactory;
 	}
 
 	/**
@@ -186,4 +180,22 @@ class CalendarImpl implements ICreateFromString {
 		}
 	}
 
+	public function handleIMipMessage(Message $iTipMessage): void {
+		$server = new InvitationResponseServer(false);
+
+		/** @var CustomPrincipalPlugin $plugin */
+		$plugin = $server->server->getPlugin('auth');
+		// we're working around the previous implementation
+		// that only allowed the public system principal to be used
+		// so set the custom principal here
+		$plugin->setCurrentPrincipal($this->calendar->getPrincipalURI());
+
+		if (empty($this->calendarInfo['uri'])) {
+			throw new CalendarException('Could not write to calendar as URI parameter is missing');
+		}
+		// Force calendar change URI
+		/** @var Schedule\Plugin $schedulingPlugin */
+		$schedulingPlugin = $server->server->getPlugin('caldav-schedule');
+		$schedulingPlugin->scheduleLocalDelivery($iTipMessage);
+	}
 }

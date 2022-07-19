@@ -171,11 +171,12 @@ interface IManager {
 
 	/**
 	 * Handle a iMip CANCEL message
+	 *
 	 * @param string $principalUri
-	 * @param string|null $sender
-	 * @param \Horde_Mail_Rfc822_List|string $recipient
-	 * @param mixed $content
+	 * @param string $sender
+	 * @param string $recipient
+	 * @param string $calendarData
 	 * @return mixed
 	 */
-	public function handleIMipCancel(string $principalUri, ?string $sender, \Horde_Mail_Rfc822_List|string $recipient, mixed $content): bool;
+	public function handleIMipCancel(string $principalUri, string $sender, string $recipient, string $calendarData): bool;
 }
