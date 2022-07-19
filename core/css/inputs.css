@@ -184,8 +184,7 @@ input:not([type=range]):invalid,
 textarea:invalid,
 div[contenteditable=true]:invalid,
 .pager li a:invalid {
-  box-shadow: none !important;
-  border-color: var(--color-error);
+  box-shadow: 0 0 0 2px var(--color-primary);
 }
 div.select2-drop .select2-search input.primary,
 select.primary,

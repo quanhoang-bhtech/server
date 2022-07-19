@@ -36,6 +36,9 @@ body {
 #body-login a {
 	font-weight: 600;
 }
+#body-login footer a {
+    color: var(--color-primary-text);
+}
 #body-login a:not(.button):hover,
 #body-login a:not(.button):focus {
 	text-decoration: underline;
@@ -142,8 +145,7 @@ form #datadirField legend {
 
 /* Buttons and input */
 #submit-wrapper,
-#reset-password-wrapper,
-.alternative-logins {
+#reset-password-wrapper {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -151,45 +153,6 @@ form #datadirField legend {
 	position: relative; /* Make the wrapper the containing block of its
 						   absolutely positioned descendant icons */
 }
-
-.alternative-logins {
-	margin: auto;
-	display: block;
-	min-width: 260px;
-	max-width: 400px;
-	overflow: hidden;
-}
-
-.alternative-logins a.button {
-	margin: 0;
-	display: block;
-	font-size: 15px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-.alternative-logins a.button::before {
-	content: "";
-	background-repeat: no-repeat;
-	background-size: contain;
-	width: 0;
-	margin-right: 0;
-	height: 18px;
-	display: inline-block;
-	vertical-align: bottom;
-}
-
-.alternative-logins .button {
-	color: var(--color-text-lighter);
-	padding: 12px 20px;
-}
-
-
-.alternative-logins .button.single-alt-login-option {
-	 width: 260px;
-	 margin: 0 auto;
- }
 
 @media only screen and (max-width: 1024px) {
 	.wrapper {
@@ -545,9 +508,7 @@ form .warning input[type='checkbox']+label {
 	display: inline-block;
 	font-weight: normal !important;
 	padding: 12px;
-	color: var(--color-primary-text);
 	cursor: pointer;
-	text-shadow: 0 0 2px rgba(0, 0, 0, .4); /* better readability on bright background */
 }
 #lost-password {
 	margin-top: -6px;
@@ -637,25 +598,10 @@ form #selectDbType label span {
 	user-select: none;
 }
 .grouptop input {
-	margin-bottom: 0 !important;
-	border-bottom: 0 !important;
-	border-bottom-left-radius: 0 !important;
-	border-bottom-right-radius: 0 !important;
-}
-.groupmiddle input {
-	margin-top: 0 !important;
-	margin-bottom: 0 !important;
-	border-top: 0 !important;
-	border-bottom: 0 !important;
-	border-radius: 0 !important;
-	box-shadow: 0 1px 0 rgba(0,0,0,.1) inset !important;
+	margin-bottom: 3px !important;
 }
 .groupbottom input {
-	margin-top: 0 !important;
-	border-top: 0 !important;
-	border-top-right-radius: 0 !important;
-	border-top-left-radius: 0 !important;
-	box-shadow: 0 1px 0 rgba(0,0,0,.1) inset !important;
+	margin-top: 3px !important;
 }
 .groupbottom input[type=submit] {
 	box-shadow: none !important;
@@ -958,10 +904,15 @@ a.legal {
 	text-align: left;
 }
 
-.error-box {
+.error-box, .login-box {
 	color: var(--color-main-text);
 	background-color: var(--color-main-background);
 	padding: 16px;
 	border-radius: var(--border-radius-large);
 	box-shadow: 0 0 10px var(--color-box-shadow);
+	display: inline-block;
+
+	&.wide {
+		display: block;
+	}
 }
