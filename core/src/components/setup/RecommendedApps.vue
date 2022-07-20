@@ -23,13 +23,13 @@
 	<div class="install-form">
 		<h2>{{ t('core', 'Recommended apps') }}</h2>
 		<p v-if="loadingApps" class="loading text-center">
-			{{ t('core', 'Loading apps…') }}
+			{{ t('core', 'Loading apps …') }}
 		</p>
 		<p v-else-if="loadingAppsError" class="loading-error text-center">
 			{{ t('core', 'Could not fetch list of apps from the App Store.') }}
 		</p>
 		<p v-else-if="installingApps" class="text-center">
-			{{ t('core', 'Installing apps…') }}
+			{{ t('core', 'Installing apps …') }}
 		</p>
 
 		<div v-for="app in recommendedApps" :key="app.id" class="app">

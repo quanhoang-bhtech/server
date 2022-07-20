@@ -163,7 +163,7 @@ script('core', 'install');
 
 	<div class="icon-loading-dark float-spinner">&nbsp;</div>
 
-	<div class="buttons"><input type="submit" class="primary" value="<?php p($l->t('Install')); ?>" data-finishing="<?php p($l->t('Installing…')); ?>"></div>
+	<div class="buttons"><input type="submit" class="primary" value="<?php p($l->t('Install')); ?>" data-finishing="<?php p($l->t('Installing …')); ?>"></div>
 
 	<p class="info">
 		<span class="icon-info-white"></span>

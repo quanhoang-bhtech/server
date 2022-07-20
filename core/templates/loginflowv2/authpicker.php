@@ -46,9 +46,9 @@ $urlGenerator = $_['urlGenerator'];
 	<br/>
 
 	<p id="redirect-link">
-		<a href="<?php p($urlGenerator->linkToRouteAbsolute('core.ClientFlowLoginV2.grantPage', ['stateToken' => $_['stateToken'], 'user' => $_['user']])) ?>"  tabindex="-1">
+		<form action="<?php p($urlGenerator->linkToRouteAbsolute('core.ClientFlowLoginV2.grantPage', ['stateToken' => $_['stateToken'], 'user' => $_['user']])) ?>" method="get">
 			<input type="submit" class="login primary icon-confirm-white" value="<?php p($l->t('Log in')) ?>">
-		</a>
+		</form>
 	</p>
 
 	<form action="<?php p($urlGenerator->linkToRouteAbsolute('core.ClientFlowLoginV2.apptokenRedirect')); ?>" method="post" id="app-token-login-field" class="hidden">

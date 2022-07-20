@@ -98,14 +98,23 @@
 			<transition name="fade" mode="out-in">
 				<div class="warning">
 					{{ t('core', 'Login form is disabled.') }}<br>
-					<small>{{ t('core', 'Please contact your administrator.') }}
+					<small>
+						{{ t('core', 'Please contact your administrator.') }}
 					</small>
 				</div>
 			</transition>
 		</div>
 
-		<div class="alternative-logins" v-for="(alternativeLogin, index) in alternativeLogins" :key="index">
-			<Button type="primary" @click="goTo(alternativeLogin.href)" class="button-inverted">
+		<div id="alternative-logins" class="alternative-logins">
+			<Button v-for="(alternativeLogin, index) in alternativeLogins"
+				:key="index"
+				type="primary"
+				:wide="true"
+				@click="goTo(alternativeLogin.href)"
+				class="button-inverted"
+				:class="[alternativeLogin.class]"
+				role="link"
+				:href="alternativeLogin.href">
 				{{ alternativeLogin.name }}
 				<template #icon>
 					<ArrowRight />
@@ -206,12 +215,8 @@ export default {
 		}
 	}
 
-	.alternative-logins {
-		display: flex;
-		justify-content: center;
-		button {
-			margin-top: 4px;
-			margin-bottom: 4px;
-		}
+	.alternative-logins button {
+		margin-top: 12px;
+		margin-bottom: 4px;
 	}
 </style>

@@ -102,7 +102,6 @@ window.addEventListener('DOMContentLoaded', function() {
 			$('#selectDbType').buttonset('disable')
 		}
 		$('.strengthify-wrapper, .tipsy')
-			.css('-ms-filter', '"progid:DXImageTransform.Microsoft.Alpha(Opacity=30)"')
 			.css('filter', 'alpha(opacity=30)')
 			.css('opacity', 0.3)
 

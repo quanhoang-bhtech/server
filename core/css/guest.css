@@ -1,4 +1,5 @@
 /* Copyright (c) 2011, Jan-Christoph Borchardt, http://jancborchardt.net
+ * SPDX-FileCopyrightText: 2022 Carl Schwan <carl@carlschwan.eu>
  This file is licensed under the Affero General Public License version 3 or later.
  See the COPYING-README file. */
 
@@ -235,7 +236,7 @@ select {
 	padding: 12px;
 	background-color: var(--color-main-background);
 	font-weight: bold;
-	color: var(--color-text-lighter);
+	color: var(--color-text);
 	border: none;
 	border-radius: 100px; /* --border-radius-pill */
 	cursor: pointer;
@@ -620,10 +621,6 @@ form #selectDbType label span {
 .body-login-container {
 	display: flex;
 	flex-direction: column;
-	margin-top: 15px;
-	padding: 15px;
-	background-color: rgba(0,0,0,.3);
-	color: #fff;
 	text-align: left;
 	word-wrap: break-word;
 	border-radius: 10px; /* --border-radius-large */
@@ -632,14 +629,6 @@ form #selectDbType label span {
 	-webkit-user-select: text;
 	-ms-user-select: text;
 	user-select: text;
-}
-
-.body-login-container h2,
-.warning h2,
-.update h2,
-.error h2 {
-	color: #fff;
-	text-align: center;
 }
 
 /* TODO: Change all .warning/.update/.error to .body-login-container */
@@ -898,7 +887,18 @@ a.legal {
 	text-align: left;
 }
 
-.error-box, .login-box, .install-form {
+.notecard:last-child {
+	margin-bottom: 0;
+}
+
+.notecard pre {
+	background-color: var(--color-background-dark);
+	margin-top: 1rem;
+	padding: 1em 1.3em;
+	border-radius: var(--border-radius);
+}
+
+.guest-box, .error-box, .login-box, .install-form, .body-login-container {
 	color: var(--color-main-text);
 	background-color: var(--color-main-background);
 	padding: 16px;
@@ -907,7 +907,7 @@ a.legal {
 	display: inline-block;
 }
 
-.align-left {
+.text-left {
 	text-align: left;
 }
 
@@ -928,4 +928,8 @@ button.toggle-password {
 	background-color: transparent;
 	border-width: 0;
 	height: 44px;
+}
+
+.margin-top {
+	margin-top: 1rem;
 }

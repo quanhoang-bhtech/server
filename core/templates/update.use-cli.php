@@ -1,4 +1,4 @@
-<div class="update" data-productname="<?php p($_['productName']) ?>" data-version="<?php p($_['version']) ?>">
+<div class="guest-box" data-productname="<?php p($_['productName']) ?>" data-version="<?php p($_['version']) ?>">
 	<div class="updateOverview">
 		<h2 class="title"><?php p($l->t('Update needed')) ?></h2>
 		<div class="infogroup">
