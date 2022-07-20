@@ -104,7 +104,7 @@
 			</transition>
 		</div>
 
-		<div class="alternative-logins" v-for="alternativeLogin in alternativeLogins">
+		<div class="alternative-logins" v-for="(alternativeLogin, index) in alternativeLogins" :key="index">
 			<Button type="primary" @click="goTo(alternativeLogin.href)" class="button-inverted">
 				{{ alternativeLogin.name }}
 				<template #icon>

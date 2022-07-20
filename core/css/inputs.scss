@@ -85,9 +85,8 @@ div[contenteditable=true],
 	&:required {
 		box-shadow: none;
 	}
-	&:invalid {
-		box-shadow: none !important;
-		border-color: var(--color-error);
+	&:user-invalid {
+		box-shadow: 0 0 0 2px var(--color-error) !important;
 	}
 	/* Primary action button, use sparingly */
 	&.primary {

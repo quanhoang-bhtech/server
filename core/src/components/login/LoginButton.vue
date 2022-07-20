@@ -20,7 +20,11 @@
   -->
 
 <template>
-	<Button type="primary" native-type="submit" @click="$emit('click')" class="button-inverted" :wide="true">
+	<Button type="primary"
+		native-type="submit"
+		@click="$emit('click')"
+		class="button-inverted"
+		:wide="true">
 		{{ !loading ? value : valueLoading  }}
 		<template #icon>
 			<div v-if="loading" class="submit-wrapper__icon icon-loading-small-dark" />

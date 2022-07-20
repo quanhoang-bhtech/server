@@ -177,14 +177,14 @@ div[contenteditable=true]:required,
 .pager li a:required {
   box-shadow: none;
 }
-div.select2-drop .select2-search input:invalid,
-select:invalid,
-button:not(.button-vue):invalid, .button:invalid,
-input:not([type=range]):invalid,
-textarea:invalid,
-div[contenteditable=true]:invalid,
-.pager li a:invalid {
-  box-shadow: 0 0 0 2px var(--color-primary);
+div.select2-drop .select2-search input:user-invalid,
+select:user-invalid,
+button:not(.button-vue):user-invalid, .button:user-invalid,
+input:not([type=range]):user-invalid,
+textarea:user-invalid,
+div[contenteditable=true]:user-invalid,
+.pager li a:user-invalid {
+  box-shadow: 0 0 0 2px var(--color-error) !important;
 }
 div.select2-drop .select2-search input.primary,
 select.primary,

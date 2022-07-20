@@ -45,10 +45,6 @@ body {
 	text-decoration-skip-ink: auto;
 }
 
-#showAdvanced {
-	color: var(--color-primary-text);
-}
-
 em {
 	font-style: normal;
 	opacity: .5;
@@ -111,18 +107,21 @@ form {
 }
 form fieldset {
 	width: 260px;
-	margin: auto auto 20px;
+	margin-top: 8px;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 }
 form #sqliteInformation {
-	margin-top: -20px;
+	margin-top: 0px;
 	margin-bottom: 20px;
 }
 form #adminaccount {
 	margin-bottom: 15px;
+}
+form #advancedHeader {
+	width: 100%;
 }
 form fieldset legend, #datadirContent label {
 	width: 100%;
@@ -208,11 +207,21 @@ input:not([type='password']),
 a.button {
 	font-size: 20px;
 	margin: 5px;
-	padding: 11px 10px 9px;
+	padding: 5px;
 	outline: none;
 	border-radius: 3px; /* --border-radius */
 	-webkit-appearance: none;
 }
+
+input:not([type='radio']),
+input:not([type='range']) {
+    border-width: 2px;
+}
+
+input:not([type='range']):focus-visible {
+    box-shadow: none !important;
+}
+
 input[type='submit'],
 input[type='submit'].icon-confirm,
 input[type='button'],
@@ -232,30 +241,30 @@ select {
 	cursor: pointer;
 }
 input[type='submit']:focus {
-	border: 2px solid black !important;
-	padding: 8px;
+	box-shadow: 0 0 0 2px inset var(--color-main-text) !important;
 }
 input[type='text'],
 input[type='tel'],
 input[type='password'],
 input[type='email'] {
-	width: 249px;
-	background: #fff;
+	width: 266px;
+	padding: 5px 10px;
 	color: var(--color-text-lighter);
 	cursor: text;
 	font-family: inherit;
 	-webkit-appearance: textfield;
 	-moz-appearance: textfield;
 	box-sizing: content-box;
-	border: none;
 	font-weight: normal;
+	margin-left: 0;
+	margin-right: 0;
 }
 input[type='text']:focus-visible,
 input[type='password']:focus-visible {
 	outline: var(--color-primary) auto 2px;
 }
 input[type='password'].password-with-toggle, input[type='text'].password-with-toggle {
-	width: 219px;
+	width: 236px;
 	padding-right: 40px;
 }
 input.login {
@@ -296,8 +305,6 @@ button.primary:not(:disabled):focus,
 a.primary:not(:disabled):hover,
 a.primary:not(:disabled):focus {
 	color: var(--color-primary-text);
-	background-image: linear-gradient(40deg, var(--color-primary) 0%, var(--color-primary-light) 130%);
-	background-position: initial;
 }
 
 /* Checkboxes - white only for login */
@@ -358,14 +365,13 @@ input[type='checkbox'].checkbox--white:checked + label:before {
 	display: inline-block;
 	position: relative;
 	top: -20px;
-	width: 269px;
+	width: 286px;
 	border-radius: 0 0 3px 3px;
 	overflow: hidden;
 	height: 3px;
 }
 .tooltip-inner {
 	font-weight: bold;
-	color: #ccc;
 	padding: 3px 6px;
 	text-align: center;
 }
@@ -373,9 +379,13 @@ input[type='checkbox'].checkbox--white:checked + label:before {
 /* Show password toggle */
 #show, #dbpassword-toggle {
 	position: absolute;
-	right: 1em;
-	top: .8em;
-	float: right;
+	right: 2px;
+	top: 4px;
+	display: flex;
+	justify-content: center;
+	width: 44px;
+	align-content: center;
+	padding: 13px;
 }
 #show + label, #dbpassword-toggle + label {
 	right: 21px;
@@ -507,11 +517,8 @@ form .warning input[type='checkbox']+label {
 #reset-password-wrapper + a {
 	display: inline-block;
 	font-weight: normal !important;
-	padding: 12px;
+	padding: 12px 12px 0 12px;
 	cursor: pointer;
-}
-#lost-password {
-	margin-top: -6px;
 }
 #forgot-password {
 	padding: 11px;
@@ -568,20 +575,17 @@ form #selectDbType label {
 	flex-grow: 1;
 	margin: 0 -1px 5px;
 	font-size: 12px;
-	background:#f8f8f8;
-	color:#888;
+	background: var(--color-background-hover);
+	color: var(--color-main-text);
 	cursor:pointer;
-	border: 1px solid #ddd;
+	border: 1px solid var(--color-border);
 	padding: 10px 17px;
 }
 form #selectDbType label.ui-state-hover,
 form #selectDbType label.ui-state-active {
 	font-weight: normal;
-	color:#000;
-	background-color:#e8e8e8;
-}
-form #selectDbType .ui-visual-focus {
-	box-shadow: none;
+	background: var(--color-background-darker);
+	color: var(--color-main-text);
 }
 form #selectDbType label span {
 	display: none;
@@ -597,11 +601,11 @@ form #selectDbType label span {
 	-ms-user-select: none;
 	user-select: none;
 }
-.grouptop input {
-	margin-bottom: 3px !important;
+.grouptop, .groupmiddle {
+	margin-bottom: 8px !important;
 }
-.groupbottom input {
-	margin-top: 3px !important;
+.groupbottom {
+	margin-bottom: 13px;
 }
 .groupbottom input[type=submit] {
 	box-shadow: none !important;
@@ -658,7 +662,6 @@ form #selectDbType label span {
 .warning legend,
 .warning a,
 .error a {
-	color: #fff !important;
 	font-weight: bold !important;
 	opacity: 1;
 }
@@ -683,15 +686,6 @@ form #selectDbType label span {
 }
 a.warning {
 	cursor: pointer;
-}
-fieldset.warning legend,
-fieldset.update legend {
-	top: 18px;
-	position: relative;
-}
-fieldset.warning legend + p,
-fieldset.update legend + p {
-	margin-top: 12px;
 }
 
 /* Various paragraph styles */
@@ -904,15 +898,34 @@ a.legal {
 	text-align: left;
 }
 
-.error-box, .login-box {
+.error-box, .login-box, .install-form {
 	color: var(--color-main-text);
 	background-color: var(--color-main-background);
 	padding: 16px;
 	border-radius: var(--border-radius-large);
 	box-shadow: 0 0 10px var(--color-box-shadow);
 	display: inline-block;
+}
 
-	&.wide {
-		display: block;
-	}
+.align-left {
+	text-align: left;
+}
+
+.error-box.wide, .login-box.wide {
+	display: block;
+	text-align: left;
+}
+
+.login-box fieldset {
+	margin-top: 0;
+}
+
+.error-box pre {
+	overflow-x: scroll;
+}
+
+button.toggle-password {
+	background-color: transparent;
+	border-width: 0;
+	height: 44px;
 }

@@ -20,16 +20,16 @@
   -->
 
 <template>
-	<div class="body-login-container">
+	<div class="install-form">
 		<h2>{{ t('core', 'Recommended apps') }}</h2>
 		<p v-if="loadingApps" class="loading text-center">
-			{{ t('core', 'Loading apps …') }}
+			{{ t('core', 'Loading apps…') }}
 		</p>
 		<p v-else-if="loadingAppsError" class="loading-error text-center">
 			{{ t('core', 'Could not fetch list of apps from the App Store.') }}
 		</p>
 		<p v-else-if="installingApps" class="text-center">
-			{{ t('core', 'Installing apps …') }}
+			{{ t('core', 'Installing apps…') }}
 		</p>
 
 		<div v-for="app in recommendedApps" :key="app.id" class="app">
@@ -53,12 +53,21 @@
 			</div>
 		</div>
 
-		<InstallButton v-if="showInstallButton"
-			@click.stop.prevent="installApps" />
+		<div class="dialog-row">
+			<Button type="tertiary-no-background"
+				role="link"
+				href="defaultPageUrl"
+				v-if="showInstallButton"
+				@click="goTo(defaultPageUrl)">
+				{{ t('core', 'Cancel') }}
+			</Button>
 
-		<p class="text-center">
-			<a :href="defaultPageUrl">{{ t('core', 'Cancel') }}</a>
-		</p>
+			<Button type="primary"
+				v-if="showInstallButton"
+				@click.stop.prevent="installApps">
+				{{ t('core', 'Install recommended apps') }}
+			</Button>
+		</div>
 	</div>
 </template>
 
@@ -69,8 +78,7 @@ import { loadState } from '@nextcloud/initial-state'
 import pLimit from 'p-limit'
 import { translate as t } from '@nextcloud/l10n'
 
-// TODO replace with Button component when @nextcloud/vue is upgraded to v5
-import InstallButton from './InstallButton'
+import Button from '@nextcloud/vue/dist/Components/Button'
 
 import logger from '../../logger'
 
@@ -106,7 +114,7 @@ const defaultPageUrl = loadState('core', 'defaultPageUrl')
 export default {
 	name: 'RecommendedApps',
 	components: {
-		InstallButton,
+		Button,
 	},
 	data() {
 		return {
@@ -184,13 +192,18 @@ export default {
 			}
 			return recommended[appId].description
 		},
+		goTo(href) {
+			window.location.href = href
+		}
 	},
 }
 </script>
 
 <style lang="scss" scoped>
-.body-login-container {
-
+.dialog-row {
+	display: flex;
+	justify-content: end;
+	margin-top: 8px;
 }
 
 p {
@@ -215,7 +228,9 @@ p {
 	img {
 		height: 50px;
 		width: 50px;
-		filter: invert(1);
+		@media (prefers-color-scheme: dark) {
+			filter: invert(1);
+		}
 	}
 
 	img, .info {
@@ -228,7 +243,6 @@ p {
 		}
 
 		h3 {
-			color: #fff;
 			margin-top: 0;
 		}
 
