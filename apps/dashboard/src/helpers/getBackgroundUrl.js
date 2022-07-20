@@ -27,7 +27,9 @@ import prefixWithBaseUrl from './prefixWithBaseUrl'
 
 export default (background, time = 0, themingDefaultBackground = '') => {
 	const enabledThemes = window.OCA.Theming.enabledThemes
-	const isDarkTheme = enabledThemes.join('').indexOf('dark') !== -1
+	const isDarkTheme = enabledThemes && (enabledThemes.length > 1 || enabledThemes[0] !== 'default')
+		? enabledThemes.join('').indexOf('dark') !== -1
+		: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
 
 	if (background === 'default') {
 		if (themingDefaultBackground && themingDefaultBackground !== 'backgroundColor') {
