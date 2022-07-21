@@ -160,7 +160,7 @@ class Application extends App implements IBootstrap {
 
 	public function registerDownloadEvents(
 		IEventDispatcher $dispatcher,
-		?IUserSession $userSession,
+		IUserSession $userSession,
 		IRootFolder $rootFolder
 	): void {
 
@@ -168,12 +168,11 @@ class Application extends App implements IBootstrap {
 			BeforeDirectFileDownloadEvent::class,
 			function (BeforeDirectFileDownloadEvent $event) use ($userSession, $rootFolder): void {
 				$pathsToCheck = [$event->getPath()];
-
 				// Check only for user/group shares. Don't restrict e.g. share links
-				if ($userSession && $userSession->isLoggedIn()) {
-					$uid = $userSession->getUser()->getUID();
+				$user = $userSession->getUser();
+				if ($user) {
 					$viewOnlyHandler = new ViewOnly(
-						$rootFolder->getUserFolder($uid)
+						$rootFolder->getUserFolder($user->getUID())
 					);
 					if (!$viewOnlyHandler->check($pathsToCheck)) {
 						$event->setSuccessful(false);
@@ -195,10 +194,10 @@ class Application extends App implements IBootstrap {
 				}
 
 				// Check only for user/group shares. Don't restrict e.g. share links
-				if ($userSession && $userSession->isLoggedIn()) {
-					$uid = $userSession->getUser()->getUID();
+				$user = $userSession->getUser();
+				if ($user) {
 					$viewOnlyHandler = new ViewOnly(
-						$rootFolder->getUserFolder($uid)
+						$rootFolder->getUserFolder($user->getUID())
 					);
 					if (!$viewOnlyHandler->check($pathsToCheck)) {
 						$event->setErrorMessage('Access to this resource or one of its sub-items has been denied.');
