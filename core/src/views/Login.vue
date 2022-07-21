@@ -20,7 +20,7 @@
   -->
 
 <template>
-	<div id="login" class="login-box">
+	<div id="login" class="guest-box">
 		<div v-if="!hideLoginForm || directLogin">
 			<transition name="fade" mode="out-in">
 				<div v-if="!passwordlessLogin && !resetPassword && resetPasswordTarget === ''"
@@ -215,8 +215,21 @@ export default {
 		}
 	}
 
+	#lost-password {
+		padding: 4px;
+		margin: 8px;
+		border-radius: var(--border-radius);
+	}
+
 	.alternative-logins button {
 		margin-top: 12px;
-		margin-bottom: 4px;
+		margin-bottom: 12px;
+		&:first-child {
+			margin-top: 0;
+		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
 	}
 </style>

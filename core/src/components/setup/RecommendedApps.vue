@@ -20,7 +20,7 @@
   -->
 
 <template>
-	<div class="install-form">
+	<div class="guest-box">
 		<h2>{{ t('core', 'Recommended apps') }}</h2>
 		<p v-if="loadingApps" class="loading text-center">
 			{{ t('core', 'Loading apps …') }}

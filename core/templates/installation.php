@@ -5,7 +5,7 @@ script('core', 'install');
 <input type='hidden' id='hasSQLite' value='<?php p($_['hasSQLite']) ?>'>
 <input type='hidden' id='hasPostgreSQL' value='<?php p($_['hasPostgreSQL']) ?>'>
 <input type='hidden' id='hasOracle' value='<?php p($_['hasOracle']) ?>'>
-<form action="index.php" method="post" class="install-form">
+<form action="index.php" method="post" class="guest-box">
 <input type="hidden" name="install" value="true">
 	<?php if (count($_['errors']) > 0): ?>
 	<fieldset class="warning">
@@ -109,7 +109,7 @@ script('core', 'install');
 					autocomplete="off" autocapitalize="none" autocorrect="off">
 			</p>
 			<p class="groupmiddle">
-				<input type="password" name="dbpass" id="dbpass" data-typetoggle="#dbpassword-toggle"
+				<input type="password" name="dbpass" id="dbpass"
 					placeholder="<?php p($l->t('Database password')); ?>"
 					value="<?php p($_['dbpass']); ?>"
 					autocomplete="off" autocapitalize="none" autocorrect="off">

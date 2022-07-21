@@ -164,7 +164,7 @@ textarea:disabled,
 div[contenteditable=true]:disabled,
 .pager li a:disabled {
   background-color: var(--color-background-dark);
-  color: var(--color-text-maxcontrast);
+  color: var(--color-main-text);
   cursor: default;
   opacity: 0.5;
 }

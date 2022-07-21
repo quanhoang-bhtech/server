@@ -9,7 +9,7 @@ if (!isset($_)) {//standalone  page is not supported anymore - redirect to /
 }
 // @codeCoverageIgnoreEnd
 ?>
-<div class="error-box">
+<div class="guest-box">
 	<h2><?php p($l->t('Access forbidden')); ?></h2>
 		<p class='hint'><?php if (isset($_['message'])) {
 	p($_['message']);

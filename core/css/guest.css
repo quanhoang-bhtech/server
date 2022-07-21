@@ -281,17 +281,6 @@ input.update-continue {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-.updateAnyways a.updateAnywaysButton {
-	font-size: 14px;
-	padding: 10px 20px;
-	color: #666 !important;
-	display: inline-block;
-	border-radius: 100px; /* --border-radius-pill */
-	margin: 15px 5px;
-}
-.updateAnyways a.updateAnywaysButton:hover {
-	color: #222 !important;
-}
 
 /* Get rid of the inside dotted line in Firefox */
 button::-moz-focus-inner,
@@ -388,37 +377,7 @@ input[type='checkbox'].checkbox--white:checked + label:before {
 	align-content: center;
 	padding: 13px;
 }
-#show + label, #dbpassword-toggle + label {
-	right: 21px;
-	top: 15px !important;
-	margin: -14px !important;
-	padding: 14px !important;
-}
-#show:checked + label, #dbpassword-toggle:checked + label, #personal-show:checked + label {
-	opacity: .8;
-}
-#show + label, #dbpassword-toggle + label, #personal-show + label {
-	position: absolute !important;
-	height: 20px;
-	width: 24px;
-	background-image: url('../img/actions/toggle.svg?v=1');
-	background-repeat: no-repeat;
-	background-position: center;
-	opacity: .3;
-}
-#show + label:before, #dbpassword-toggle + label:before, #personal-show + label:before {
-	display: none;
-}
-/* Feedback for keyboard focus and mouse hover */
-#show:focus + label, #dbpassword-toggle:focus + label, #personal-show:focus + label,
-#show + label:hover, #dbpassword-toggle + label:hover, #personal-show + label:hover {
-  opacity: 1;
-}
-#show:focus-visible + label, #dbpassword-toggle:focus-visible + label, #personal-show:focus-visible + label {
-	box-shadow: var(--color-primary) 0 0 0 2px;
-	opacity: 1;
-	border-radius: 9999px;
-}
+
 #pass2, input[name='personal-password-clone'] {
 	padding: .6em 2.5em .4em .4em;
 	width: 8em;
@@ -597,9 +556,6 @@ form #selectDbType label span {
 .groupmiddle,
 .groupbottom {
 	position: relative;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 }
 .grouptop, .groupmiddle {
@@ -643,38 +599,6 @@ form #selectDbType label span {
 
 .body-login-container p:not(:last-child) {
     margin-bottom: 12px;
-}
-
-.warning.updateAnyways {
-	text-align: center;
-}
-.warning legend,
-.warning a,
-.error a {
-	font-weight: bold !important;
-	opacity: 1;
-}
-.error a.button {
-	color: #555 !important;
-	display: inline-block;
-	text-align: center;
-}
-.error pre {
-	white-space: pre-wrap;
-	text-align: left;
-}
-.error-wide {
-	width: 700px;
-	margin-top: 35px;
-}
-.error-wide .button {
-	color: black !important;
-}
-.warning-input {
-	border-color: #ce3702 !important;
-}
-a.warning {
-	cursor: pointer;
 }
 
 /* Various paragraph styles */
@@ -898,7 +822,7 @@ a.legal {
 	border-radius: var(--border-radius);
 }
 
-.guest-box, .error-box, .login-box, .install-form, .body-login-container {
+.guest-box, .body-login-container {
 	color: var(--color-main-text);
 	background-color: var(--color-main-background);
 	padding: 16px;
@@ -907,20 +831,16 @@ a.legal {
 	display: inline-block;
 }
 
-.text-left {
-	text-align: left;
-}
-
-.error-box.wide, .login-box.wide {
+.guest-box.wide {
 	display: block;
 	text-align: left;
 }
 
-.login-box fieldset {
+.guest-box fieldset {
 	margin-top: 0;
 }
 
-.error-box pre {
+.guest-box pre {
 	overflow-x: scroll;
 }
 
@@ -930,6 +850,13 @@ button.toggle-password {
 	height: 44px;
 }
 
+/** Utilities */
+
 .margin-top {
-	margin-top: 1rem;
+	margin-top: 1rem !important;
+}
+
+
+.text-left {
+	text-align: left !important;
 }
