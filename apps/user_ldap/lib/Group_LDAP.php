@@ -808,7 +808,7 @@ class Group_LDAP extends BackendUtility implements GroupInterface, IGroupLDAP, I
 		if (isset($seen[$dn])) {
 			return [];
 		}
-		$cacheKey = $dn . implode('-', array_keys($seen));
+		$cacheKey = $dn . implode('-', $seen);
 		$seen[$dn] = true;
 
 		if ($this->cachedGroupsByMember[$cacheKey]) {
