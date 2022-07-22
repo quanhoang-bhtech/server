@@ -45,6 +45,7 @@ use OC\Files\View;
 use OC\Streamer;
 use OCP\Lock\ILockingProvider;
 use OCP\Files\Events\BeforeZipCreatedEvent;
+use OCP\Files\Events\BeforeDirectFileDownloadEvent;
 use OCP\EventDispatcher\IEventDispatcher;
 
 /**
@@ -172,7 +173,7 @@ class OC_Files {
 			$event = new BeforeZipCreatedEvent($dir, $files);
 			$dispatcher = \OC::$server->query(IEventDispatcher::class);
 			$dispatcher->dispatchTyped($event);
-			if ((!$event->isSuccessful()) || $event->getErrorMessage() !== null)) {
+			if ((!$event->isSuccessful()) || $event->getErrorMessage() !== null) {
 				throw new \OC\ForbiddenException($event->getErrorMessage());
 			}
 

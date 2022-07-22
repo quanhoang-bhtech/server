@@ -1104,6 +1104,23 @@ class ShareAPIController extends OCSController {
 			$share->setNote($note);
 		}
 
+		// get the node with the point of view of the current user
+		$nodes = $userFolder->getById($share->getNode()->getId());
+		if (count($nodes) > 0) {
+			$node = $nodes[0];
+			$storage = $node->getStorage();
+			if ($storage && $storage->instanceOfStorage(SharedStorage::class)) {
+				/** @var \OCA\Files_Sharing\SharedStorage $storage */
+				$inheritedAttributes = $storage->getShare()->getAttributes();
+				if ($inheritedAttributes !== null && $inheritedAttributes->getAttribute('permissions', 'download') === false) {
+					if ($hideDownload === 'false') {
+						throw new OCSBadRequestException($this->l->t('Cannot increase permissions'));
+					}
+					$share->setHideDownload(true);
+				}
+			}
+		}
+
 		/**
 		 * expirationdate, password and publicUpload only make sense for link shares
 		 */
@@ -1130,22 +1147,6 @@ class ShareAPIController extends OCSController {
 			}
 
 			$userFolder = $this->rootFolder->getUserFolder($this->currentUser);
-			// get the node with the point of view of the current user
-			$nodes = $userFolder->getById($share->getNode()->getId());
-			if (count($nodes) > 0) {
-				$node = $nodes[0];
-				$storage = $node->getStorage();
-				if ($storage && $storage->instanceOfStorage(SharedStorage::class)) {
-					/** @var \OCA\Files_Sharing\SharedStorage $storage */
-					$inheritedAttributes = $storage->getShare()->getAttributes();
-					if ($inheritedAttributes !== null && $inheritedAttributes->getAttribute('permissions', 'download') === false) {
-						if ($hideDownload === 'false') {
-							throw new OCSBadRequestException($this->l->t('Cannot increase permissions'));
-						}
-						$share->setHideDownload(true);
-					}
-				}
-			}
 
 			$newPermissions = null;
 			if ($publicUpload === 'true') {
