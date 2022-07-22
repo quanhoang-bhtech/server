@@ -337,6 +337,7 @@ abstract class Node implements \Sabre\DAV\INode {
 
 		if ($storage && $storage->instanceOfStorage(\OCA\Files_Sharing\SharedStorage::class)) {
 			if ($storage instanceof Wrapper) {
+				/** @var \OCA\Files_Sharing\SharedStorage $storage */
 				$storage = $storage->getInstanceOfStorage(\OCA\Files_Sharing\SharedStorage::class);
 				if ($storage === null) {
 					throw new \RuntimeException('Should not happen, instanceOfStorage but getInstanceOfStorage return null');
@@ -344,7 +345,6 @@ abstract class Node implements \Sabre\DAV\INode {
 			} else {
 				throw new \RuntimeException('Should not happen, instanceOfStorage but not a wrapper');
 			}
-			/** @var \OCA\Files_Sharing\SharedStorage $storage */
 			$attributes = $storage->getShare()->getAttributes()->toArray();
 		}
 

@@ -1104,6 +1104,8 @@ class ShareAPIController extends OCSController {
 			$share->setNote($note);
 		}
 
+		$userFolder = $this->rootFolder->getUserFolder($this->currentUser);
+
 		// get the node with the point of view of the current user
 		$nodes = $userFolder->getById($share->getNode()->getId());
 		if (count($nodes) > 0) {
@@ -1145,8 +1147,6 @@ class ShareAPIController extends OCSController {
 			} elseif ($hideDownload === 'false') {
 				$share->setHideDownload(false);
 			}
-
-			$userFolder = $this->rootFolder->getUserFolder($this->currentUser);
 
 			$newPermissions = null;
 			if ($publicUpload === 'true') {
