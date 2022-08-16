@@ -45,24 +45,6 @@
 					@click.prevent="resetPassword = true">
 					{{ t('core', 'Forgot password?') }}
 				</a>
-				<br>
-				<template v-if="hasPasswordless">
-					<div v-if="countAlternativeLogins"
-						class="alternative-logins">
-						<a v-if="hasPasswordless"
-							class="button"
-							:class="{ 'single-alt-login-option': countAlternativeLogins }"
-							href="#"
-							@click.prevent="passwordlessLogin = true">
-							{{ t('core', 'Log in with a device') }}
-						</a>
-					</div>
-					<a v-else
-						href="#"
-						@click.prevent="passwordlessLogin = true">
-						{{ t('core', 'Log in with a device') }}
-					</a>
-				</template>
 			</div>
 			<div v-else-if="!loading && passwordlessLogin"
 				key="reset"

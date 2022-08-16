@@ -3,8 +3,6 @@
 script('core', 'dist/login');
 ?>
 
-<div id="login"></div>
-
 <?php if (!empty($_['alt_login'])) { ?>
     <div id="alternative-logins" class="alternative-logins">
         <?php foreach ($_['alt_login'] as $login): ?>
@@ -14,3 +12,4 @@ script('core', 'dist/login');
         <?php endforeach; ?>
     </div>
 <?php } ?>
+<div id="login"></div>
