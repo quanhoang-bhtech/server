@@ -46,39 +46,6 @@
 					{{ t('core', 'Forgot password?') }}
 				</a>
 			</div>
-			<div v-else-if="!loading && passwordlessLogin"
-				key="reset"
-				class="login-additional">
-				<PasswordLessLoginForm
-					:username.sync="user"
-					:redirect-url="redirectUrl"
-					:inverted-colors="invertedColors"
-					:auto-complete-allowed="autoCompleteAllowed"
-					:is-https="isHttps"
-					:is-localhost="isLocalhost"
-					:has-public-key-credential="hasPublicKeyCredential"
-					@submit="loading = true" />
-				<a href="#" @click.prevent="passwordlessLogin = false">
-					{{ t('core', 'Back') }}
-				</a>
-			</div>
-			<div v-else-if="!loading && canResetPassword"
-				key="reset"
-				class="login-additional">
-				<div class="lost-password-container">
-					<ResetPassword v-if="resetPassword"
-						:username.sync="user"
-						:reset-password-link="resetPasswordLink"
-						:inverted-colors="invertedColors"
-						@abort="resetPassword = false" />
-				</div>
-			</div>
-			<div v-else-if="resetPasswordTarget !== ''">
-				<UpdatePassword :username.sync="user"
-					:reset-password-target="resetPasswordTarget"
-					:inverted-colors="invertedColors"
-					@done="passwordResetFinished" />
-			</div>
 		</transition>
 	</div>
 	<div v-else>
@@ -97,7 +64,6 @@ import { loadState } from '@nextcloud/initial-state'
 import queryString from 'query-string'
 
 import LoginForm from '../components/login/LoginForm.vue'
-import PasswordLessLoginForm from '../components/login/PasswordLessLoginForm.vue'
 import ResetPassword from '../components/login/ResetPassword.vue'
 import UpdatePassword from '../components/login/UpdatePassword.vue'
 
@@ -117,9 +83,6 @@ export default {
 
 	components: {
 		LoginForm,
-		PasswordLessLoginForm,
-		ResetPassword,
-		UpdatePassword,
 	},
 
 	data() {
@@ -147,15 +110,25 @@ export default {
 			isHttps: window.location.protocol === 'https:',
 			isLocalhost: window.location.hostname === 'localhost',
 			hasPublicKeyCredential: typeof (window.PublicKeyCredential) !== 'undefined',
-			hideLoginForm: loadState('core', 'hideLoginForm', false),
+			// hideLoginForm: loadState('core', 'hideLoginForm', false),
 		}
+	},
+	computed: {
+		hideLoginForm() {
+			const qParams = new URLSearchParams(window.location.search)
+			if (!qParams.has('all')) {
+				return false
+			} else {
+				return true
+			}
+    	}
 	},
 	methods: {
 		passwordResetFinished() {
 			this.resetPasswordTarget = ''
 			this.directLogin = true
 		},
-	},
+	}
 }
 </script>
 

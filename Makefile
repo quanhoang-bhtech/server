@@ -1,10 +1,10 @@
-all: clean dev-setup build-js-production
+all: dev-setup build-js-production
 
 # Dev env management
 dev-setup: clean npm-init
 
 npm-init:
-	npm ci
+	npm i
 
 npm-update:
 	npm update
@@ -28,23 +28,6 @@ lint-fix-watch:
 
 # Cleaning
 clean:
-	rm -rf apps/accessibility/js/
-	rm -rf apps/comments/js/
-	rm -rf apps/dashboard/js/
-	rm -rf apps/dav/js/
-	rm -rf apps/files/js/dist/
-	rm -rf apps/files_sharing/js/dist/
-	rm -rf apps/files_trashbin/js/
-	rm -rf apps/files_versions/js/
-	rm -rf apps/oauth2/js/
-	rm -rf apps/settings/js/vue-*
-	rm -rf apps/systemtags/js/systemtags.*
-	rm -rf apps/twofactor_backupcodes/js
-	rm -rf apps/updatenotification/js/updatenotification.*
-	rm -rf apps/user_status/js/
-	rm -rf apps/weather_status/js/
-	rm -rf apps/workflowengine/js/
-	rm -rf core/js/dist
 
 clean-git: clean
 	git checkout -- apps/accessibility/js/

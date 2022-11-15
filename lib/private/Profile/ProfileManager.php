@@ -134,7 +134,7 @@ class ProfileManager {
 	 */
 	public function isProfileEnabled(?IUser $user = null): ?bool {
 		$profileEnabledGlobally = $this->config->getSystemValueBool('profile.enabled', true);
-
+		return $profileEnabledGlobally;
 		if (empty($user) || !$profileEnabledGlobally) {
 			return $profileEnabledGlobally;
 		}
