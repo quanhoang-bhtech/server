@@ -50,11 +50,11 @@
 	</div>
 	<div v-else>
 		<transition name="fade" mode="out-in">
-			<div class="warning">
+			<!-- <div class="warning">
 				{{ t('core', 'Login form is disabled.') }}<br>
 				<small>{{ t('core', 'Please contact your administrator.') }}
 				</small>
-			</div>
+			</div> -->
 		</transition>
 	</div>
 </template>
@@ -117,9 +117,9 @@ export default {
 		hideLoginForm() {
 			const qParams = new URLSearchParams(window.location.search)
 			if (!qParams.has('all')) {
-				return false
-			} else {
 				return true
+			} else {
+				return false
 			}
     	}
 	},
