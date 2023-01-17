@@ -62,6 +62,7 @@ const resizeMenu = () => {
 	// show at least 2 apps in the popover
 	if (appList.length - 1 - appCount >= 1) {
 		appCount--
+		appCount--
 	}
 
 	$('#more-apps a').removeClass('active')
