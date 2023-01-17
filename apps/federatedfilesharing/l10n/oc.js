@@ -8,8 +8,8 @@ OC.L10N.register(
     "Sharing %s failed, could not find %s, maybe the server is currently unreachable." : "Lo partiment de %s a fracassat : impossible de trobar %s. Benlèu que lo servidor es momentanèament injonhable.",
     "Accept" : "Acceptar",
     "Decline" : "Refusar",
-    "Share with me through my #Nextcloud Federated Cloud ID, see %s" : "Partejatz amb ieu gràcias a mon identificant Federated Cloud #Nextcloud %s",
-    "Share with me through my #Nextcloud Federated Cloud ID" : "Partejatz amb ieu gràcias a mon identificant Federated Cloud #Nextcloud",
+    "Share with me through my #xD-Drive Federated Cloud ID, see %s" : "Partejatz amb ieu gràcias a mon identificant Federated Cloud #xD-Drive %s",
+    "Share with me through my #xD-Drive Federated Cloud ID" : "Partejatz amb ieu gràcias a mon identificant Federated Cloud #xD-Drive",
     "Federated Cloud Sharing" : "Federated Cloud Sharing",
     "Open documentation" : "Veire la documentacion",
     "Allow users on this server to send shares to other servers" : "Autorizar los utilizaires d'aqueste servidor a mandar de partiments cap a d'autres servidors",
@@ -18,7 +18,7 @@ OC.L10N.register(
     "Your Federated Cloud ID:" : "Vòstre identificant Federated Cloud :",
     "Share it:" : "Partejar :",
     "Add to your website" : "Apondre a vòstre site web",
-    "Share with me via Nextcloud" : "Partejatz amb ieu via Nextcloud",
+    "Share with me via xD Drive" : "Partejatz amb ieu via xD Drive",
     "HTML Code:" : "Còdi HTML :"
 },
 "nplurals=2; plural=(n > 1);");

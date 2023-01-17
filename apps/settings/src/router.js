@@ -25,8 +25,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { generateUrl } from '@nextcloud/router'
-import { APPS_SECTION_ENUM } from './constants/AppsConstants.js'
-import store from './store/index.js'
 
 // Dynamic loading
 const Users = () => import(/* webpackChunkName: 'settings-users' */'./views/Users')
@@ -42,8 +40,8 @@ Vue.use(Router)
  * ensure the proper route.
  * ⚠️ Routes needs to match the php routes.
  */
-const baseTitle = document.title
-const router = new Router({
+
+export default new Router({
 	mode: 'history',
 	// if index.php is in the url AND we got this far, then it's working:
 	// let's keep using index.php in the url
@@ -55,26 +53,10 @@ const router = new Router({
 			component: Users,
 			props: true,
 			name: 'users',
-			meta: {
-				title: () => {
-					return t('settings', 'Active users')
-				},
-			},
 			children: [
 				{
 					path: ':selectedGroup',
 					name: 'group',
-					meta: {
-						title: (to) => {
-							if (to.params.selectedGroup === 'admin') {
-								return t('settings', 'Admins')
-							}
-							if (to.params.selectedGroup === 'disabled') {
-								return t('settings', 'Disabled users')
-							}
-							return decodeURIComponent(to.params.selectedGroup)
-						},
-					},
 					component: Users,
 				},
 			],
@@ -84,30 +66,10 @@ const router = new Router({
 			component: Apps,
 			props: true,
 			name: 'apps',
-			meta: {
-				title: () => {
-					return t('settings', 'Your apps')
-				},
-			},
 			children: [
 				{
 					path: ':category',
 					name: 'apps-category',
-					meta: {
-						title: async (to) => {
-							if (to.name === 'apps') {
-								return t('settings', 'Your apps')
-							}
-							if (APPS_SECTION_ENUM[to.params.category]) {
-								return APPS_SECTION_ENUM[to.params.category]
-							}
-							await store.dispatch('getCategories')
-							const category = store.getters.getCategoryById(to.params.category)
-							if (category.displayName) {
-								return category.displayName
-							}
-						},
-					},
 					component: Apps,
 					children: [
 						{
@@ -121,14 +83,3 @@ const router = new Router({
 		},
 	],
 })
-
-router.afterEach(async (to) => {
-	const metaTitle = await to.meta.title?.(to)
-	if (metaTitle) {
-		document.title = `${metaTitle} - ${baseTitle}`
-	} else {
-		document.title = baseTitle
-	}
-})
-
-export default router

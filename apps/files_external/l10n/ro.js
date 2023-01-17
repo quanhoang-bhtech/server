@@ -9,6 +9,7 @@ OC.L10N.register(
     "Error configuring OAuth2" : "Eroare la configurarea OAuth2",
     "Generate keys" : "Generează chei",
     "Error generating key pair" : "Eroarea la generarea cheilor",
+    "All users. Type to select user or group." : "Toți utilizatorii. Începe să scrii pentru a selecta un utilizator sau un grup.",
     "Enable encryption" : "Activează criptarea",
     "Enable previews" : "Activează previzualizările",
     "Enable sharing" : "Activează partajarea",
@@ -60,7 +61,7 @@ OC.L10N.register(
     "Secure ftps://" : "ftps:// sigur",
     "Local" : "Local",
     "Location" : "Locație",
-    "Nextcloud" : "Nextcloud",
+    "xD Drive" : "xD Drive",
     "SFTP" : "SFTP",
     "Root" : "Root",
     "SFTP with secret key login" : "SFTP cu cheie secretă de autentificare",
@@ -77,6 +78,6 @@ OC.L10N.register(
     "Available for" : "Disponibil pentru",
     "Add storage" : "Adauga stocare",
     "Advanced settings" : "Setări avansate",
-    "All users. Type to select user or group." : "Toți utilizatorii. Începe să scrii pentru a selecta un utilizator sau un grup."
+    "Delete" : "Șterge"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

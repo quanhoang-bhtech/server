@@ -10,6 +10,7 @@ OC.L10N.register(
     "Error configuring OAuth2" : "Error durante configuration de OAuth2",
     "Generate keys" : "Generar claves",
     "Error generating key pair" : "Error durante creation de par de claves",
+    "All users. Type to select user or group." : "Tote usatores. Scribe pro selectionar usator o gruppo.",
     "Enable encryption" : "Activar cryptographia",
     "Enable previews" : "Activar previsualisationes",
     "Enable sharing" : "Activar compartimento",
@@ -57,7 +58,7 @@ OC.L10N.register(
     "Secure ftps://" : "Secure ftps://",
     "Local" : "Local",
     "Location" : "Loco",
-    "Nextcloud" : "Nextcloud",
+    "xD Drive" : "xD Drive",
     "SFTP" : "SFTP",
     "Root" : "Root",
     "Share" : "Compartir",
@@ -73,6 +74,6 @@ OC.L10N.register(
     "Add storage" : "Adder immagazinage",
     "Advanced settings" : "Configurationes avantiate",
     "Allow users to mount external storage" : "Permitter usatores montar immagazinage externe",
-    "All users. Type to select user or group." : "Tote usatores. Scribe pro selectionar usator o gruppo."
+    "Delete" : "Deler"
 },
 "nplurals=2; plural=(n != 1);");

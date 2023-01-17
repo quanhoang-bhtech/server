@@ -9,6 +9,7 @@ OC.L10N.register(
     "Error configuring OAuth2" : "OAuth2 seadistamise tõrge",
     "Generate keys" : "Loo võtmed",
     "Error generating key pair" : "Viga võtmepaari loomisel",
+    "All users. Type to select user or group." : "Kõik kasutajad. Kirjuta, et valida kasutaja või grupp.",
     "Enable encryption" : "Luba krüpteerimine",
     "Enable previews" : "Luba eelvaated",
     "Enable sharing" : "Luba jagamine",
@@ -64,7 +65,7 @@ OC.L10N.register(
     "Secure ftps://" : "Turvaline ftps://",
     "Local" : "Kohalik",
     "Location" : "Asukoht",
-    "Nextcloud" : "Nextcloud",
+    "xD Drive" : "xD Drive",
     "SFTP" : "SFTP",
     "Root" : "Juur",
     "SFTP with secret key login" : "SFTP koos salajase võtmega logimisega",
@@ -83,6 +84,6 @@ OC.L10N.register(
     "Available for" : "Saadaval",
     "Add storage" : "Lisa andmehoidla",
     "Advanced settings" : "Lisavalikud",
-    "All users. Type to select user or group." : "Kõik kasutajad. Kirjuta, et valida kasutaja või grupp."
+    "Delete" : "Kustuta"
 },
 "nplurals=2; plural=(n != 1);");

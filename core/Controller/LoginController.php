@@ -118,7 +118,7 @@ class LoginController extends Controller {
 
 		$response = new RedirectResponse($this->urlGenerator->linkToRouteAbsolute(
 			'core.login.showLoginForm',
-			['clear' => true] // this param the code in login.js may be removed when the "Clear-Site-Data" is working in the browsers
+			['clear' => true] // this param the the code in login.js may be removed when the "Clear-Site-Data" is working in the browsers
 		));
 
 		$this->session->set('clearingExecutionContexts', '1');
@@ -151,7 +151,7 @@ class LoginController extends Controller {
 			if (!is_array($loginMessages)) {
 				$loginMessages = [[], []];
 			}
-			$loginMessages[1][] = $this->l10n->t('This community release of Nextcloud is unsupported and push notifications are limited.');
+			$loginMessages[1][] = $this->l10n->t('This community release of xD Drive is unsupported and push notifications are limited.');
 		}
 		if (is_array($loginMessages)) {
 			[$errors, $messages] = $loginMessages;

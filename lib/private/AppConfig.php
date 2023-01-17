@@ -110,12 +110,9 @@ class AppConfig implements IAppConfig {
 			'/^cookie$/',
 		],
 		'spreed' => [
-			'/^bridge_bot_password$/',
-			'/^hosted-signaling-server-(.*)$/',
+			'/^bridge_bot_password/',
 			'/^signaling_servers$/',
 			'/^signaling_ticket_secret$/',
-			'/^signaling_token_privkey_(.*)$/',
-			'/^signaling_token_pubkey_(.*)$/',
 			'/^sip_bridge_dialin_info$/',
 			'/^sip_bridge_shared_secret$/',
 			'/^stun_servers$/',
@@ -429,14 +426,5 @@ class AppConfig implements IAppConfig {
 		$result->closeCursor();
 
 		$this->configLoaded = true;
-	}
-
-
-	/**
-	 * Clear all the cached app config values
-	 * New cache will be generated next time a config value is retrieved
-	 */
-	public function clearCachedConfig(): void {
-		$this->configLoaded = false;
 	}
 }

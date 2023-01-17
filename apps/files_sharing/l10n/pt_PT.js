@@ -20,7 +20,7 @@ OC.L10N.register(
     "You can upload into this folder" : "Pode enviar para esta pasta",
     "No compatible server found at {remote}" : "Nenhum servidor compatível encontrado em {remote}",
     "Invalid server URL" : "URL de servidor inválido",
-    "Failed to add the public link to your Nextcloud" : "Não foi possível adicionar a hiperligação pública ao seu Nextcloud",
+    "Failed to add the public link to your xD Drive" : "Não foi possível adicionar a hiperligação pública ao seu xD Drive",
     "No expiration date set" : "Data de expiração não definida",
     "Shared by" : "Partilhado por",
     "File shares" : "Partilhas de ficheiro",
@@ -116,6 +116,7 @@ OC.L10N.register(
     "remote group" : "grupo remoto",
     "guest" : "convidado",
     "Cannot copy, please copy the link manually" : "Não foi possível copiar, copie a ligação manualmente",
+    "Copy to clipboard" : "Copiar para área de transferência",
     "Only works for users with access to this folder" : "Apenas funciona para utilizadores com acesso a esta pasta",
     "Link copied" : "Link copiado",
     "Password protection" : "Protegido por palavra-passe",
@@ -152,9 +153,9 @@ OC.L10N.register(
     "Note" : "Nota",
     "Select or drop files" : "Seleccione ou solte ficheiros",
     "Uploaded files:" : "Ficheiros enviados:",
-    "Add to your Nextcloud" : "Adicionar à sua Nextcloud",
+    "Add to your xD Drive" : "Adicionar à sua xD Drive",
     "Wrong share ID, share doesn't exist" : "Id. de partilha errada, a partilha não existe",
-    "Copy to clipboard" : "Copiar para área de transferência",
+    "Wrong path, file/folder doesn't exist" : "Caminho errado, o arquivo ou pasta não existe",
     "Sorry, this link doesn’t seem to work anymore." : "Desculpe, mas esta hiperligação parece já não estar a funcionar."
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -9,6 +9,7 @@ OC.L10N.register(
     "Error configuring OAuth2" : "Fallu configurando OAuth2",
     "Generate keys" : "Xenerar claves",
     "Error generating key pair" : "Fallu xenerando'l par de claves",
+    "All users. Type to select user or group." : "Tolos usuarios. Escribe pa seleccionar usuariu o grupu.",
     "Enable encryption" : "Habilitar cifráu",
     "Never" : "Enxamás",
     "Read only" : "Namái llectura",
@@ -52,7 +53,7 @@ OC.L10N.register(
     "Host" : "Sirvidor",
     "Local" : "Llocal",
     "Location" : "Llocalización",
-    "Nextcloud" : "Nextcloud",
+    "xD Drive" : "xD Drive",
     "SFTP" : "SFTP",
     "Root" : "Raíz",
     "Share" : "Compartir",
@@ -70,6 +71,6 @@ OC.L10N.register(
     "Available for" : "Disponible pa",
     "Add storage" : "Amestar almacenamientu",
     "Advanced settings" : "Axustes avanzaos",
-    "All users. Type to select user or group." : "Tolos usuarios. Escribe pa seleccionar usuariu o grupu."
+    "Delete" : "Desaniciar"
 },
 "nplurals=2; plural=(n != 1);");

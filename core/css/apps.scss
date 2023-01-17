@@ -983,13 +983,7 @@ $outter-margin: math.div($popoveritem-height - $popovericon-size, 2);
 .contact .popovermenu ul,
 .popover__menu {
 	> li > a > img {
-		filter: var(--background-invert-if-dark);
-
-		// We do not want to invert the color of the user_status emoji:
-		// https://github.com/nextcloud/nextcloud-vue/blob/8899087f8f8d45e0ed744bde9faa00b625a21905/src/components/NcAvatar/NcAvatar.vue#L495
-		&[src^="data"] {
-			filter: none;
-		}
+		 filter: var(--background-invert-if-dark);
 	}
 }
 
@@ -1221,6 +1215,28 @@ $outter-margin: math.div($popoveritem-height - $popovericon-size, 2);
 			}
 		}
 
+	}
+}
+
+/* "app-*" descendants use border-box sizing, so the height of the icon must be
+ * set to the height of the item (as well as its width to make it squared). */
+#content[class*='app-'] {
+	.bubble,
+	.app-navigation-entry-menu,
+	.popovermenu {
+		li {
+			> button,
+			> a,
+			> .menuitem {
+				width: fit-content;
+				/* DEPRECATED! old img in popover fallback
+				* TODO: to remove */
+				> img {
+					width: $popoveritem-height;
+					height: $popoveritem-height;
+				}
+			}
+		}
 	}
 }
 

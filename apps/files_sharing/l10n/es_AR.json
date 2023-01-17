@@ -17,7 +17,7 @@
     "You can upload into this folder" : "Usted puede cargar archivos dentro de esta carpeta",
     "No compatible server found at {remote}" : "No se encontró un servidor compatible en {remote}",
     "Invalid server URL" : "URL del servidor inválido",
-    "Failed to add the public link to your Nextcloud" : "Se presentó una falla al agregar el link público a su Nextcloud",
+    "Failed to add the public link to your xD Drive" : "Se presentó una falla al agregar el link público a su xD Drive",
     "No expiration date set" : "No se ha establecido la fecha de expiración",
     "Shared by" : "Compartido por",
     "File shares" : "Archivos compartidos",
@@ -106,6 +106,7 @@
     "group" : "grupo",
     "remote" : "remoto",
     "Cannot copy, please copy the link manually" : "No es posible copiar, por favor copia el enlace manualmente",
+    "Copy to clipboard" : "Copiar al portapapeles",
     "Only works for users with access to this folder" : "Solo funciona para usuarios con acceso a esta carpeta",
     "Link copied" : "Link copiado",
     "Password protection" : "Protección con contraseña",
@@ -137,9 +138,9 @@
     "Note" : "Nota",
     "Select or drop files" : "Seleccione o suelte los archivos",
     "Uploaded files:" : "Archivos cargados:",
-    "Add to your Nextcloud" : "Agregar a su Nextcloud",
+    "Add to your xD Drive" : "Agregar a su xD Drive",
     "Wrong share ID, share doesn't exist" : "ID del elemento compartido equivocado, el elemento compartido no existe",
-    "Copy to clipboard" : "Copiar al portapapeles",
+    "Wrong path, file/folder doesn't exist" : "La ruta es incorrecta, el archivo/carpeta no existe",
     "Sorry, this link doesn’t seem to work anymore." : "Lo sentimos, este link no parece funcionar más. ",
     "Toggle grid view" : "Vista de cuadrícula"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"

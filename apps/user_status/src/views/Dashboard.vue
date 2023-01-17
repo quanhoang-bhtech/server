@@ -20,12 +20,11 @@
   -->
 
 <template>
-	<NcDashboardWidget id="user-status_panel"
+	<DashboardWidget id="user-status_panel"
 		:items="items"
-		:loading="loading"
-		:empty-content-message="t('user_status', 'No recent status changes')">
+		:loading="loading">
 		<template #default="{ item }">
-			<NcDashboardWidgetItem :main-text="item.mainText"
+			<DashboardWidgetItem :main-text="item.mainText"
 				:sub-text="item.subText">
 				<template #avatar>
 					<NcAvatar class="item-avatar"
@@ -35,27 +34,33 @@
 						:show-user-status="false"
 						:show-user-status-compact="false" />
 				</template>
-			</NcDashboardWidgetItem>
+			</DashboardWidgetItem>
 		</template>
-		<template #emptyContentIcon>
-			<div class="icon-user-status-dark" />
+		<template #empty-content>
+			<NcEmptyContent id="user_status-widget-empty-content">
+				<template #icon>
+					<div class="icon-user-status" />
+				</template>
+				{{ t('user_status', 'No recent status changes') }}
+			</NcEmptyContent>
 		</template>
-	</NcDashboardWidget>
+	</DashboardWidget>
 </template>
 
 <script>
+import { DashboardWidget, DashboardWidgetItem } from '@nextcloud/vue-dashboard'
 import { loadState } from '@nextcloud/initial-state'
 import NcAvatar from '@nextcloud/vue/dist/Components/NcAvatar'
-import NcDashboardWidget from '@nextcloud/vue/dist/Components/NcDashboardWidget'
-import NcDashboardWidgetItem from '@nextcloud/vue/dist/Components/NcDashboardWidgetItem'
+import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent'
 import moment from '@nextcloud/moment'
 
 export default {
 	name: 'Dashboard',
 	components: {
 		NcAvatar,
-		NcDashboardWidget,
-		NcDashboardWidgetItem,
+		DashboardWidget,
+		DashboardWidgetItem,
+		NcEmptyContent,
 	},
 	data() {
 		return {
@@ -112,10 +117,14 @@ export default {
 </script>
 
 <style lang="scss">
-.icon-user-status-dark {
-	width: 64px;
-	height: 64px;
-	background-size: 64px;
-	filter: var(--background-invert-if-dark);
+#user_status-widget-empty-content {
+	text-align: center;
+	margin-top: 5vh;
+	.icon-user-status {
+		width: 64px;
+		height: 64px;
+		background-size: 64px;
+		filter: var(--background-invert-if-dark);
+	}
 }
 </style>

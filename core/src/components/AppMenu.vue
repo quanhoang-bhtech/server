@@ -30,10 +30,7 @@
 				<a :href="app.href"
 					:class="{ 'has-unread': app.unread > 0 }"
 					:aria-label="appLabel(app)"
-					:title="app.name"
-					:aria-current="app.active ? 'page' : false"
-					:target="app.target ? '_blank' : undefined"
-					:rel="app.target ? 'noopener noreferrer' : undefined">
+					:aria-current="app.active ? 'page' : false">
 					<img :src="app.icon" alt="">
 					<div class="app-menu-entry--label">
 						{{ app.name }}
@@ -198,7 +195,6 @@ $header-icon-size: 20px;
 			text-align: center;
 			bottom: -5px;
 			left: 50%;
-			top: 45%;
 			display: block;
 			min-width: 100%;
 			transform: translateX(-50%);
@@ -206,7 +202,6 @@ $header-icon-size: 20px;
 			width: 100%;
 			text-overflow: ellipsis;
 			overflow: hidden;
-			letter-spacing: -0.5px;
 		}
 
 		&:hover,
@@ -214,11 +209,11 @@ $header-icon-size: 20px;
 			opacity: 1;
 			.app-menu-entry--label {
 				opacity: 1;
-				font-weight: bolder;
+				font-weight: bold;
+				font-size: 14px;
 				bottom: 0;
-				width: 100%;
-				text-overflow: ellipsis;
-				overflow: hidden;
+				width: auto;
+				overflow: visible;
 			}
 		}
 
@@ -232,7 +227,7 @@ $header-icon-size: 20px;
 		opacity: 1;
 
 		img {
-			margin-top: -8px;
+			margin-top: -6px;
 		}
 
 		.app-menu-entry--label {
@@ -259,7 +254,10 @@ $header-icon-size: 20px;
 
 	&:focus-visible {
 		opacity: 1;
-		outline: none !important;
+		background-color: transparent !important;
+		border-radius: var(--border-radius);
+		outline: none;
+		box-shadow: 0 0 0 2px var(--color-primary-text);
 	}
 }
 

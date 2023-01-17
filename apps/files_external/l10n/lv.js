@@ -10,6 +10,7 @@ OC.L10N.register(
     "Error configuring OAuth2" : "Konfigurēšanas kļūda OAuth2",
     "Generate keys" : "Izveidot atslēgas",
     "Error generating key pair" : "Kļūda, ģenerējot atslēgu pāri",
+    "All users. Type to select user or group." : "Visiem lietotājiem. Klikšķini, lai atlasītu lietotāju vai grupu.",
     "(Group)" : "(Grupa)",
     "Compatibility with Mac NFD encoding (slow)" : "Saderība ar Mac NFD kodēšanu (lēni)",
     "Enable encryption" : "Ieslēgt šifrēšanu",
@@ -58,7 +59,7 @@ OC.L10N.register(
     "Secure ftps://" : "Secure ftps://",
     "Local" : "Lokāls",
     "Location" : "Vieta",
-    "Nextcloud" : "Nextcloud",
+    "xD Drive" : "xD Drive",
     "SFTP" : "SFTP",
     "Root" : "Root",
     "SFTP with secret key login" : "SFTP pieteikšanās ar slepeno atslēgu",
@@ -77,6 +78,6 @@ OC.L10N.register(
     "Add storage" : "Pievienot krātuvi",
     "Advanced settings" : "Paplašināti iestatījumi",
     "Allow users to mount external storage" : "Atļaut lietotājiem uzstādīt ārējās krātuves",
-    "All users. Type to select user or group." : "Visiem lietotājiem. Klikšķini, lai atlasītu lietotāju vai grupu."
+    "Delete" : "Dzēst"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

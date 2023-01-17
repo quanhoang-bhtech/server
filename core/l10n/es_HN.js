@@ -64,7 +64,7 @@ OC.L10N.register(
     "An error occurred." : "Se presentó un error.",
     "Please reload the page." : "Por favor vuelve a cargar la página.",
     "The update was unsuccessful. For more information <a href=\"{url}\">check our forum post</a> covering this issue." : "La actualización no fue exitosa. Para más información <a href=\"{url}\">consulta nuestro comentario  en el foro </a> que cubre este tema. ",
-    "The update was unsuccessful. Please report this issue to the <a href=\"https://github.com/nextcloud/server/issues\" target=\"_blank\">Nextcloud community</a>." : "La actualización no fue exitosa. Por favor reporta este tema a la <a href=\"https://github.com/nextcloud/server/issues\" target=\"_blank\">Comunidad Nextcloud</a>.",
+    "The update was unsuccessful. Please report this issue to the <a href=\"https://github.com/nextcloud/server/issues\" target=\"_blank\">xD Drive community</a>." : "La actualización no fue exitosa. Por favor reporta este tema a la <a href=\"https://github.com/nextcloud/server/issues\" target=\"_blank\">Comunidad xD Drive</a>.",
     "More apps" : "Más aplicaciones",
     "Log in" : "Ingresar",
     "Logging in …" : "Iniciando sesión ...",
@@ -188,6 +188,7 @@ OC.L10N.register(
     "Need help?" : "¿Necesitas ayuda?",
     "See the documentation" : "Ver la documentación",
     "This application requires JavaScript for correct operation. Please {linkstart}enable JavaScript{linkend} and reload the page." : "Esta aplicación requiere de JavaScript para su correcta operación. Por favor {linkstart}habilita JavaScript{linkend} y vuelve a cargar la página. ",
+    "Contacts" : "Contactos",
     "Confirm your password" : "Confirma tu contraseña",
     "App token" : "Ficha de la aplicación",
     "Grant access" : "Conceder acceso",
@@ -218,6 +219,6 @@ OC.L10N.register(
     "invisible" : "invisible",
     "File not found" : "Archivo no encontrado",
     "More" : "Más",
-    "Contacts" : "Contactos"
+    "The password is wrong. Try again." : "La contraseña está equivoada. Por favor vuelve a intentarlo. "
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

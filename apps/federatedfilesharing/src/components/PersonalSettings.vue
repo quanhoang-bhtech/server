@@ -18,7 +18,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 <template>
 	<NcSettingsSection :title="t('federatedfilesharing', 'Federated Cloud')"
-		:description="t('federatedfilesharing', 'You can share with anyone who uses a Nextcloud server or other Open Cloud Mesh (OCM) compatible servers and services! Just put their Federated Cloud ID in the share dialog. It looks like person@cloud.example.com')"
+		:description="t('federatedfilesharing', 'You can share with anyone who uses a xD Drive server or other Open Cloud Mesh (OCM) compatible servers and services! Just put their Federated Cloud ID in the share dialog. It looks like person@cloud.example.com')"
 		:doc-url="docUrlFederated">
 		<p class="cloud-id-text">
 			{{ t('federatedfilesharing', 'Your Federated Cloud ID:') }}
@@ -72,7 +72,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 					:href="reference"
 					:style="backgroundStyle">
 					<span :style="linkStyle" />
-					{{ t('federatedfilesharing', 'Share with me via Nextcloud') }}
+					{{ t('federatedfilesharing', 'Share with me via xD Drive') }}
 				</a>
 			</p>
 
@@ -123,10 +123,10 @@ export default {
 	},
 	computed: {
 		messageWithURL() {
-			return t('federatedfilesharing', 'Share with me through my #Nextcloud Federated Cloud ID, see {url}', { url: this.reference })
+			return t('federatedfilesharing', 'Share with me through my #xD-Drive Federated Cloud ID, see {url}', { url: this.reference })
 		},
 		messageWithoutURL() {
-			return t('federatedfilesharing', 'Share with me through my #Nextcloud Federated Cloud ID')
+			return t('federatedfilesharing', 'Share with me through my #xD-Drive Federated Cloud ID')
 		},
 		shareDiasporaUrl() {
 			return `https://share.diasporafoundation.org/?title=${encodeURIComponent(this.messageWithoutURL)}&url=${encodeURIComponent(this.reference)}`
@@ -149,7 +149,7 @@ export default {
 		htmlCode() {
 			return `<a target="_blank" rel="noreferrer noopener" href="${this.reference}" style="${this.backgroundStyle}">
 	<span style="${this.linkStyle}"></span>
-	${t('federatedfilesharing', 'Share with me via Nextcloud')}
+	${t('federatedfilesharing', 'Share with me via xD Drive')}
 </a>`
 		},
 		copyLinkTooltip() {

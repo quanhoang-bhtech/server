@@ -10,6 +10,7 @@ OC.L10N.register(
     "Error configuring OAuth2" : "Gabim gjatë formësimit të OAuth2",
     "Generate keys" : "Prodho kyçe",
     "Error generating key pair" : "Gabim gjatë prodhimit të çiftit të kyçeve",
+    "All users. Type to select user or group." : "Krejt përdoruesit. Shtypni që të përzgjidhet përdorues ose grup.",
     "Compatibility with Mac NFD encoding (slow)" : "Pëerputhshmëri me kodim Mac NFD (e ngadaltë)",
     "Enable encryption" : "Aktivizoni fshehtëzim",
     "Enable previews" : "Aktivizoni paraparje",
@@ -86,7 +87,7 @@ OC.L10N.register(
     "Secure ftps://" : "ftps:// e sigurt",
     "Local" : "Vendore",
     "Location" : "Vendndodhje",
-    "Nextcloud" : "Nextcloud",
+    "xD Drive" : "xD Drive",
     "SFTP" : "SFTP",
     "Root" : "Rrënjë",
     "SFTP with secret key login" : "SFTP me hyrje me kyç të fshehtë",
@@ -110,6 +111,6 @@ OC.L10N.register(
     "Add storage" : "Shtoni depozitë",
     "Advanced settings" : "Rregullime të mëtejshme",
     "Allow users to mount external storage" : "Lejoju përdoruesve të montojnë depozita të jashtme",
-    "All users. Type to select user or group." : "Krejt përdoruesit. Shtypni që të përzgjidhet përdorues ose grup."
+    "Delete" : "Fshije"
 },
 "nplurals=2; plural=(n != 1);");

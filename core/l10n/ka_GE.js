@@ -65,7 +65,7 @@ OC.L10N.register(
     "An error occurred." : "წარმოიშვა შეცდომა.",
     "Please reload the page." : "გთხოვთ გადატვირთოთ გვერდი.",
     "The update was unsuccessful. For more information <a href=\"{url}\">check our forum post</a> covering this issue." : "განახლებისას წარმოიშვა შეცდომა. მეტი ინფორმაციისთვის იხილეთ <a href=\"{url}\">ჩვენი ფორუმის პოსტი</a>, სადაც საუბარია ამ პრობლემაზე.",
-    "The update was unsuccessful. Please report this issue to the <a href=\"https://github.com/nextcloud/server/issues\" target=\"_blank\">Nextcloud community</a>." : "განახლებისას წარმოიშვა შეცდომა. გთხოვთ განაცხადოთ ამ პრობლემის შესახებ <a href=\"https://github.com/nextcloud/server/issues\" target=\"_blank\">Nextcloud საზოგადოებაში</a>.",
+    "The update was unsuccessful. Please report this issue to the <a href=\"https://github.com/nextcloud/server/issues\" target=\"_blank\">xD Drive community</a>." : "განახლებისას წარმოიშვა შეცდომა. გთხოვთ განაცხადოთ ამ პრობლემის შესახებ <a href=\"https://github.com/nextcloud/server/issues\" target=\"_blank\">xD Drive საზოგადოებაში</a>.",
     "More apps" : "მეტი აპლიკაცია",
     "Log in" : "შესვლა",
     "Logging in …" : "შესვლა ...",
@@ -192,6 +192,7 @@ OC.L10N.register(
     "Need help?" : "გესაჭიროებათ დახმარება?",
     "See the documentation" : "იხილეთ დოკუმენტაცია",
     "This application requires JavaScript for correct operation. Please {linkstart}enable JavaScript{linkend} and reload the page." : "ეს აპლიკაცია სწორი ოპერაციისთვის საჭიროებს JavaScript-ს. გთხოვთ {linkstart}ჩართოთ JavaScript-ი{linkend} და გადატვირთოთ გვერდი.",
+    "Contacts" : "კონტაქტები",
     "Confirm your password" : "დაადასტურეთ თქვენი პაროლი",
     "App token" : "აპლიკაციის ტოკენი",
     "Grant access" : "უფლებების მინიჭება",
@@ -222,6 +223,6 @@ OC.L10N.register(
     "invisible" : "უჩინარი",
     "File not found" : "ფაილი ვერ იქნა ნაპოვნი",
     "More" : "მეტი",
-    "Contacts" : "კონტაქტები"
+    "The password is wrong. Try again." : "პაროლი არასწორია. სცადეთ ახლიდან."
 },
 "nplurals=2; plural=(n!=1);");

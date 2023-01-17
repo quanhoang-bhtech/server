@@ -10,6 +10,7 @@ OC.L10N.register(
     "Error configuring OAuth2" : "Feil ved oppsett av OAuth2",
     "Generate keys" : "Generer nøkler",
     "Error generating key pair" : "Feil ved nøkkelgenerering",
+    "All users. Type to select user or group." : "Alle brukere. Tast for å velge bruker eller gruppe.",
     "(Group)" : "(Gruppe)",
     "Compatibility with Mac NFD encoding (slow)" : "Kompatibelt med Mac NFD koding (treg)",
     "Enable encryption" : "Aktiver kryptering",
@@ -94,7 +95,7 @@ OC.L10N.register(
     "Secure ftps://" : "Sikker ftps://",
     "Local" : "Lokal",
     "Location" : "Sted",
-    "Nextcloud" : "Nextcloud",
+    "xD Drive" : "xD Drive",
     "SFTP" : "SFTP",
     "Root" : "Rot",
     "SFTP with secret key login" : "SFTP med hemmelig nøkkel for pålogging",
@@ -122,6 +123,7 @@ OC.L10N.register(
     "Add storage" : "Legg til lagringsplass",
     "Advanced settings" : "Avanserte innstillinger",
     "Allow users to mount external storage" : "Tillat at brukere kobler opp eksterne lagre",
-    "All users. Type to select user or group." : "Alle brukere. Tast for å velge bruker eller gruppe."
+    "Delete" : "Slett",
+    "Are you sure you want to delete this external storage?" : "Er du sikker på at du ønsker å slette dette eksterne lageret?"
 },
 "nplurals=2; plural=(n != 1);");

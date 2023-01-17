@@ -10,6 +10,7 @@ OC.L10N.register(
     "Error configuring OAuth2" : "Villa við uppsetningu OAuth2",
     "Generate keys" : "Útbúa lykla",
     "Error generating key pair" : "Villa við að útbúa nýtt lyklapar",
+    "All users. Type to select user or group." : "Allir notendur. Skrifaðu til að velja notanda eða hóp.",
     "(Group)" : "(Hópur)",
     "Compatibility with Mac NFD encoding (slow)" : "Samhæfni við Mac NFD kóðun (hægvirkt)",
     "Enable encryption" : "Virkja dulritun",
@@ -95,7 +96,7 @@ OC.L10N.register(
     "Secure ftps://" : "Öruggt ftps://",
     "Local" : "Staðvært",
     "Location" : "Staðsetning",
-    "Nextcloud" : "Nextcloud",
+    "xD Drive" : "xD Drive",
     "SFTP" : "SFTP",
     "Root" : "Rót (root)",
     "SFTP with secret key login" : "SFTP innskráning með leynilykli",
@@ -122,9 +123,9 @@ OC.L10N.register(
     "Available for" : "Tiltækt fyrir",
     "Click to recheck the configuration" : "Smelltu til að yfirfara aftur uppsetninguna",
     "Add storage" : "Bæta við gagnahirslu",
-    "All users" : "Allir notendur",
     "Advanced settings" : "Ítarlegri valkostir",
     "Allow users to mount external storage" : "Leyfa notendum að tengja ytri gagnageymslur í skráakerfi",
-    "All users. Type to select user or group." : "Allir notendur. Skrifaðu til að velja notanda eða hóp."
+    "Delete" : "Eyða",
+    "Are you sure you want to delete this external storage?" : "Ertu viss um að þú viljir eyða þessari ytri geymslu?"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

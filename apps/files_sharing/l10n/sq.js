@@ -20,7 +20,7 @@ OC.L10N.register(
     "Terms of service" : "Termat e shërbimit",
     "No compatible server found at {remote}" : "Asnjë server i pajtueshëm nuk është gjetur tek { }",
     "Invalid server URL" : "Server i pavlefshëm URL",
-    "Failed to add the public link to your Nextcloud" : "Nuk arritët të shtoni ndërlidhjen publike tek Nextcloud juaj",
+    "Failed to add the public link to your xD Drive" : "Nuk arritët të shtoni ndërlidhjen publike tek xD Drive juaj",
     "No expiration date set" : "Nuk është vendosur data e përfundimit",
     "Shared by" : "Ndarë nga",
     "File shares" : "Ndarja e skedarëve",
@@ -108,6 +108,7 @@ OC.L10N.register(
     "conversation" : "bisedë",
     "remote" : "i largët",
     "guest" : "vizitor",
+    "Copy to clipboard" : "Kopjo në dërrasë ",
     "Only works for users with access to this folder" : "Punon vetëm për përdoruesit që kanë qasje në këtë dosje",
     "Link copied" : "Linku u kopjua",
     "Password protection" : "Password protection",
@@ -135,9 +136,9 @@ OC.L10N.register(
     "Note" : "Shënim",
     "Select or drop files" : "Përzgjidh ose hiq skedarët",
     "Uploaded files:" : "Skedarët e ngarkuar:",
-    "Add to your Nextcloud" : "Shtojeni tek Nextcloud-i juaj",
+    "Add to your xD Drive" : "Shtojeni tek xD Drive-i juaj",
     "Wrong share ID, share doesn't exist" : "ID e gabuar ndarjeje, ndarja s’ekziston",
-    "Copy to clipboard" : "Kopjo në dërrasë ",
+    "Wrong path, file/folder doesn't exist" : "Shteg i gabuar, kratela/dosja s’ekziston",
     "Sorry, this link doesn’t seem to work anymore." : "Na ndjeni, kjo lidhje duket se nuk funksionon më."
 },
 "nplurals=2; plural=(n != 1);");

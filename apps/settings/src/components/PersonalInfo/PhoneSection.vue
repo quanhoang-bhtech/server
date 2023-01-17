@@ -35,10 +35,7 @@ import AccountPropertySection from './shared/AccountPropertySection.vue'
 
 import { NAME_READABLE_ENUM } from '../../constants/AccountPropertyConstants.js'
 
-const {
-	defaultPhoneRegion,
-	phone,
-} = loadState('settings', 'personalInfoParameters', {})
+const { phone } = loadState('settings', 'personalInfoParameters', {})
 
 export default {
 	name: 'PhoneSection',
@@ -55,9 +52,6 @@ export default {
 
 	methods: {
 		onValidate(value) {
-			if (defaultPhoneRegion) {
-				return isValidPhoneNumber(value, defaultPhoneRegion)
-			}
 			return isValidPhoneNumber(value)
 		},
 	},

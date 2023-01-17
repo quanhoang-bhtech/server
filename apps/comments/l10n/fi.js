@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Comments" : "Kommentit",
     "You commented" : "Kommentoit",
+    "%1$s commented" : "%1$s kommentoi",
     "{author} commented" : "{author} kommentoi",
     "You commented on %1$s" : "Kommentoit %1$s",
     "You commented on {file}" : "Kommentoit tiedostoa {file}",
@@ -25,6 +26,7 @@ OC.L10N.register(
     "Comment deleted" : "Kommentti poistettu",
     "An error occurred while trying to delete the comment" : "Kommenttia poistaessa tapahtui virhe",
     "An error occurred while trying to create the comment" : "Kommenttia luodessa tapahtui virhe",
-    "%1$s commented" : "%1$s kommentoi"
+    "You were mentioned on “{file}”, in a comment by a user that has since been deleted" : "Sinut mainittiin tiedoston “{file}” kommentissa käyttäjän toimesta, joka on sittemmin poistettu",
+    "{user} mentioned you in a comment on “{file}”" : "{user} mainitsi sinut tiedoston \"{file}\" kommentissa"
 },
 "nplurals=2; plural=(n != 1);");

@@ -68,9 +68,9 @@ function preview(setting, value, serverCssUrl) {
 
 function hideUndoButton(setting, value) {
 	var themingDefaults = {
-		name: 'Nextcloud',
+		name: 'xD Drive',
 		slogan: t('lib', 'a safe home for all your data'),
-		url: 'https://nextcloud.com',
+		url: 'https://drive.xd-twin.io',
 		color: '#0082c9',
 		logoMime: '',
 		backgroundMime: '',
