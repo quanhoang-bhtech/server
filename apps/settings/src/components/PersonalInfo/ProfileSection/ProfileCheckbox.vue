@@ -26,6 +26,7 @@
 			id="enable-profile"
 			class="checkbox"
 			type="checkbox"
+			disabled="disabled"
 			:checked="profileEnabled"
 			@change="onEnableProfileChange">
 		<label for="enable-profile">
@@ -60,6 +61,7 @@ export default {
 
 	methods: {
 		async onEnableProfileChange(e) {
+			return false
 			const isEnabled = e.target.checked
 			this.$emit('update:profile-enabled', isEnabled)
 

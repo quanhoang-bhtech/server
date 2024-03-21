@@ -39,20 +39,19 @@ if ($_['passwordChangeSupported']) {
 	<div class="personal-settings-setting-box personal-settings-password-box">
 			<form id="passwordform" method="POST">
 				<label for="pass1" class="hidden-visually"><?php p($l->t('Current password')); ?>: </label>
-				<input type="password" id="pass1" name="oldpassword"
+				<input type="password" id="pass1" name="oldpassword" readonly
 					   placeholder="<?php p($l->t('Current password'));?>"
 					   autocomplete="current-password" autocapitalize="none" autocorrect="off" />
 
 				<div class="personal-show-container">
 					<label for="pass2" class="hidden-visually"><?php p($l->t('New password'));?>: </label>
-					<input type="password" id="pass2" name="newpassword"
+					<input type="password" id="pass2" name="newpassword" readonly
 						   placeholder="<?php p($l->t('New password')); ?>"
-						   data-typetoggle="#personal-show"
 						   autocomplete="new-password" autocapitalize="none" autocorrect="off" />
 					<input type="checkbox" id="personal-show" class="hidden-visually" name="show" /><label for="personal-show" class="personal-show-label"></label>
 				</div>
 
-				<input id="passwordbutton" type="submit" value="<?php p($l->t('Change password')); ?>" />
+				<input id="passwordbutton" type="submit" disabled value="<?php p($l->t('Change password')); ?>" />
 
 			</form>
 	</div>
